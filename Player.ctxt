@@ -1,0 +1,34 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=panel\ t\ b
+comment1.target=Player(javax.swing.JPanel,\ TileMap,\ BackgroundManager)
+comment10.params=
+comment10.target=void\ moveUp()
+comment11.params=
+comment11.target=int\ getX()
+comment12.params=x
+comment12.target=void\ setX(int)
+comment13.params=
+comment13.target=int\ getY()
+comment14.params=y
+comment14.target=void\ setY(int)
+comment15.params=
+comment15.target=java.awt.Image\ getImage()
+comment2.params=newX\ newY
+comment2.target=java.awt.Point\ collidesWithTile(int,\ int)
+comment3.params=newX\ newY
+comment3.target=java.awt.Point\ collidesWithTileDown(int,\ int)
+comment4.params=newX\ newY
+comment4.target=java.awt.Point\ collidesWithTileUp(int,\ int)
+comment5.params=direction
+comment5.target=void\ move(int)
+comment5.text=\r\n\r\n\ \ \ public\ Point\ collidesWithTile(int\ newX,\ int\ newY)\ {\r\n\r\n\t\ int\ playerWidth\ \=\ playerImage.getWidth(null);\r\n\t\ int\ playerHeight\ \=\ playerImage.getHeight(null);\r\n\r\n\ \ \ \ \ \ \t\ int\ fromX\ \=\ Math.min\ (x,\ newX);\r\n\t\ int\ fromY\ \=\ Math.min\ (y,\ newY);\r\n\t\ int\ toX\ \=\ Math.max\ (x,\ newX);\r\n\t\ int\ toY\ \=\ Math.max\ (y,\ newY);\r\n\r\n\t\ int\ fromTileX\ \=\ tileMap.pixelsToTiles\ (fromX);\r\n\t\ int\ fromTileY\ \=\ tileMap.pixelsToTiles\ (fromY);\r\n\t\ int\ toTileX\ \=\ tileMap.pixelsToTiles\ (toX\ +\ playerWidth\ -\ 1);\r\n\t\ int\ toTileY\ \=\ tileMap.pixelsToTiles\ (toY\ +\ playerHeight\ -\ 1);\r\n\r\n\t\ for\ (int\ x\=fromTileX;\ x<\=toTileX;\ x++)\ {\r\n\t\tfor\ (int\ y\=fromTileY;\ y<\=toTileY;\ y++)\ {\r\n\t\t\tif\ (tileMap.getTile(x,\ y)\ \!\=\ null)\ {\r\n\t\t\t\tPoint\ tilePos\ \=\ new\ Point\ (x,\ y);\r\n\t\t\t\treturn\ tilePos;\r\n\t\t\t}\r\n\t\t}\r\n\t\ }\r\n\t\r\n\t\ return\ null;\r\n\ \ \ }\r\n
+comment6.params=
+comment6.target=boolean\ isInAir()
+comment7.params=
+comment7.target=void\ fall()
+comment8.params=
+comment8.target=void\ jump()
+comment9.params=
+comment9.target=void\ update()
+numComments=16
