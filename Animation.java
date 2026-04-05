@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.util.ArrayList;
 //hi did this work ?
+//yes
 
 /**
     The Animation class manages a series of images (frames) and
