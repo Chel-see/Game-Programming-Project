@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class TileMap {
 
     private static final int TILE_SIZE = 32;
-    private static final int TILE_SIZE_BITS = 6;
+   private static final int TILE_SIZE_BITS = 6;
 
     private Image[][] tiles;
     private int screenWidth, screenHeight;
@@ -67,7 +67,7 @@ public class TileMap {
     x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
 
     //x = 192;                    // position player in 'random' location
-    y = dimension.height - (TILE_SIZE + playerHeight);
+    y = dimension.height - ((TILE_SIZE*3) + playerHeight);
 
         player.setX(x);
         player.setY(y);
