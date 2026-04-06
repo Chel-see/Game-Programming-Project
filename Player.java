@@ -201,10 +201,7 @@ public class Player {
          int playerWidth = playerImage.getWidth(null);
 
          if (tilePos == null && tileMap.getDoor().isSolid()) {
-            if (tileMap.getDoor().collidesWithPlayer(
-                     newX, y,
-                     playerWidth,
-                     playerImage.getHeight(null))) {
+            if (tileMap.getDoor().collidesWithPlayer()) {
 
                // block movement on right side of door
                x = tileMap.getDoor().getX() + tileMap.getDoor().getWidth();
@@ -227,10 +224,7 @@ public class Player {
 
          tilePos = collidesWithTile(newX+playerWidth, y);
          if (tilePos == null && tileMap.getDoor().isSolid()) {
-            if (tileMap.getDoor().collidesWithPlayer(
-                  newX, y,
-                  playerWidth,
-                  playerImage.getHeight(null))) {
+            if (tileMap.getDoor().collidesWithPlayer()) {
       
                // block movement on left side of door
                x = tileMap.getDoor().getX() - playerWidth;

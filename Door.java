@@ -89,7 +89,7 @@ public class Door {
         return activated;
     }
 
-    public boolean collidesWithPlayer(int newX, int newY, int playerWidth, int playerHeight) {
+    public boolean collidesWithPlayer() {
         Rectangle2D.Double doorRect = getBoundingRectangle();
         Rectangle2D.Double playerRect = player.getBounds();
 
