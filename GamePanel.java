@@ -31,6 +31,12 @@ public class GamePanel extends JPanel
     TileMapManager tileManager;
     TileMap    tileMap;
 
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean jumpPressed = false;
+
+    private boolean jumpWasPressed = false;
+
     public GamePanel () {
 
         isRunning = false;
@@ -66,11 +72,14 @@ public class GamePanel extends JPanel
 
     public void gameUpdate() {
 
+        processInput(); // player movements
+
         tileMap.update();
 
         if (!isPaused && isAnimShown)
            
         imageEffect.update();
+        
     }
 
 
@@ -188,6 +197,32 @@ public class GamePanel extends JPanel
         isAnimShown = true;
        
         
+    }
+
+    public void setLeftPressed(boolean value) {
+        leftPressed = value;
+    }
+    
+    public void setRightPressed(boolean value) {
+        rightPressed = value;
+    }
+    
+    public void setJumpPressed(boolean value) {
+        jumpPressed = value;
+    }
+
+    private void processInput() {
+        if (leftPressed) {
+            tileMap.moveLeft();
+        }
+        if (rightPressed) {
+            tileMap.moveRight();
+        }
+        if (jumpPressed && !jumpWasPressed) {
+            tileMap.jump();
+        }
+
+        jumpWasPressed = jumpPressed;
     }
 
 }

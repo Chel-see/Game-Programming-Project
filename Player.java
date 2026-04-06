@@ -322,6 +322,8 @@ public class Player {
 
       if (!panel.isVisible ()) return;
 
+      if (inAir || jumping) return;
+
       jumping = true;
       timeElapsed = 0;
 
