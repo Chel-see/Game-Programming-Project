@@ -205,19 +205,33 @@ public class GameWindow extends JFrame
         keyTF.setText(keyText + " pressed.");
 
         if (keyCode == KeyEvent.VK_LEFT) {
-            gamePanel.moveLeft();
+            //gamePanel.moveLeft();
+            gamePanel.setLeftPressed(true);
         }
         else
         if (keyCode == KeyEvent.VK_RIGHT) {
-            gamePanel.moveRight();
+            //gamePanel.moveRight();
+            gamePanel.setRightPressed(true);
         }
         else
         if (keyCode == KeyEvent.VK_SPACE) {
-            gamePanel.jump();
+            //gamePanel.jump();
+            gamePanel.setJumpPressed(true);
         }
     }
 
     public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        if (keyCode == KeyEvent.VK_LEFT) {
+            gamePanel.setLeftPressed(false);
+        }
+        if (keyCode == KeyEvent.VK_RIGHT) {
+            gamePanel.setRightPressed(false);
+        }
+        if (keyCode == KeyEvent.VK_SPACE) {
+            gamePanel.setJumpPressed(false);
+        }
 
     }
 
