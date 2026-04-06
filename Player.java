@@ -204,7 +204,8 @@ public class Player {
             if (tileMap.getDoor().collidesWithPlayer()) {
 
                // block movement on right side of door
-               x = tileMap.getDoor().getX() + tileMap.getDoor().getWidth();
+              // x = tileMap.getDoor().getX() + tileMap.getDoor().getWidth();
+                newX=newX-0;
                return;
             }
          }
@@ -227,7 +228,9 @@ public class Player {
             if (tileMap.getDoor().collidesWithPlayer()) {
       
                // block movement on left side of door
-               x = tileMap.getDoor().getX() - playerWidth;
+               //x = tileMap.getDoor().getX() - playerWidth;
+               // x = tileMap.getDoor().getX() - playerWidth;
+              newX=newX+0;
                return;
             }
          }           
