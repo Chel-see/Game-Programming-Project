@@ -15,10 +15,10 @@
        NNNN                     NNNOPPQNNN
 
 
-                                            ABBC
-                AC                          DERF
-               ASF                          DREF
-              ASEF                          DERF
-ABBBBBJKLMBBBBSEEF    ABBBBBBBBBBJKLKLKLKLKMSREF
-DEEEEEREEEEEEEEEETJKKLSEEEEEEEEEEEEEEEEEEEEEEEEF
-GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI
+                                              ABBC
+                AC                            DERF
+               ASTC                           DREF
+              ASEETC                          DERF
+ABBBBBJKLMBBBBSEEEEF    ABBBBBBBBBBJKLKLKLKLKMSREF
+DEEEEEREEEEEEEEEEEETJKKLSEEEEEEEEEEEEEEEEEEEEEEEEE
+GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI

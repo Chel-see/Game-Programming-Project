@@ -54,20 +54,40 @@ public class Player {
    }
 
 
-   public Point collidesWithTile(int newX, int newY) {
+   // public Point collidesWithTile(int newX, int newY) {
 
-            int playerWidth = playerImage.getWidth(null);
-            int offsetY = tileMap.getOffsetY();
+            // int playerWidth = playerImage.getWidth(null);
+            // int offsetY = tileMap.getOffsetY();
+      // int xTile = tileMap.pixelsToTiles(newX);
+      // int yTile = tileMap.pixelsToTiles(newY - offsetY);
+    
+
+      // if (tileMap.getTile(xTile, yTile) != null) {
+            // Point tilePos = new Point (xTile, yTile);
+          // return tilePos;
+      // }
+      // else {
+        // return null;
+      // }
+   // }
+   public Point collidesWithTile(int newX, int newY) {  //cater for left and right collisions mainly 
+
+      int playerWidth = playerImage.getWidth(null);
+      int playerHeight = playerImage.getHeight(null);
+      int offsetY = tileMap.getOffsetY();
+      
       int xTile = tileMap.pixelsToTiles(newX);
-      int yTile = tileMap.pixelsToTiles(newY - offsetY);
+      // checks the point of both the x and y axis for collisions . 
+      int yTileFrom = tileMap.pixelsToTiles(newY - offsetY+2); // added 2 so it wont detect the floor and be stuck in place
+      int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight-2);
 
-      if (tileMap.getTile(xTile, yTile) != null) {
-            Point tilePos = new Point (xTile, yTile);
-          return tilePos;
-      }
-      else {
+      for (int yTile = yTileFrom; yTile <= yTileTo; yTile++) {
+        if (tileMap.getTile(xTile, yTile) != null) {
+            return new Point(xTile, yTile);
+        }
+    }
         return null;
-      }
+      
    }
 
 
@@ -76,6 +96,7 @@ public class Player {
       int playerWidth = playerImage.getWidth(null);
             int playerHeight = playerImage.getHeight(null);
             int offsetY = tileMap.getOffsetY();
+            
       int xTile = tileMap.pixelsToTiles(newX);
       int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
       int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
@@ -208,9 +229,11 @@ public class Player {
          if (direction == 2) {
          System.out.println (": Collision going right");
                int playerWidth = playerImage.getWidth(null);
-             x = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
+            x = ( ((int) tilePos.getX() ) * TILE_SIZE- playerWidth); // keep flush with left side of tile eg 15x32=448, 448-32=416 but the player can move an extra amount 
+           
+             
      }
-      }
+     }
       else {
           if (direction == 1) {
           x = newX;
@@ -234,20 +257,29 @@ public class Player {
    }
 
 
-   public boolean isInAir() {
+   public boolean isInAir() {  // no longer uses collideswithTile, checks feet directly
 
       int playerHeight;
+      int playerWidth;
+
       Point tilePos;
 
       if (!jumping && !inAir) {   
-      playerHeight = playerImage.getHeight(null);
-      tilePos = collidesWithTile(x, y + playerHeight + 1);     // check below player to see if there is a tile
-    
-        if (tilePos == null)                       // there is no tile below player, so player is in the air
-        return true;
-      else                            // there is a tile below player, so the player is on a tile
-        return false;
-      }
+          playerHeight = playerImage.getHeight(null);
+          playerWidth  = playerImage.getWidth(null);
+          int offsetY = tileMap.getOffsetY();
+          int leftTile  = tileMap.pixelsToTiles(x);
+         int rightTile = tileMap.pixelsToTiles(x + playerWidth - 1);
+
+        int yTile = tileMap.pixelsToTiles(y - offsetY + playerHeight + 1);
+
+        // ONLY check directly below both feet
+        if (tileMap.getTile(leftTile, yTile) == null &&
+            tileMap.getTile(rightTile, yTile) == null) {
+            return true;
+        } 
+    }
+        
 
       return false;
    }
