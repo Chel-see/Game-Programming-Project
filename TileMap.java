@@ -24,6 +24,7 @@ public class TileMap {
 
     private LinkedList sprites;
     private Player player;
+    private Key key;
 
     BackgroundManager bgManager;
 
@@ -58,6 +59,7 @@ public class TileMap {
 
         tiles = new Image[mapWidth][mapHeight];
     player = new Player (panel, this, bgManager);
+    key = new Key (panel, 200, 200, player);
         sprites = new LinkedList();
 
     Image playerImage = player.getImage();
@@ -217,6 +219,9 @@ public class TileMap {
             Math.round(player.getY()), //+ offsetY,
             null);
 
+        // draw key
+        key.draw(g2, offsetX);
+
 /*
         // draw sprites
         Iterator i = map.getSprites();
@@ -278,7 +283,13 @@ public class TileMap {
 
 
     public void update() {
-    player.update();
+        player.update();
+        key.update();
+
+        if (!key.isCollected() && player.getBounds().intersects(key.getBoundingRectangle())) {
+            key.collect();
+            System.out.println("Key collected!");
+        }
     }
 
 }

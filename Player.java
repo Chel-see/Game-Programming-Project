@@ -403,4 +403,8 @@ public class Player {
       return playerImage;
    }
 
+   public Rectangle getBounds() {
+      return new Rectangle(x, y, playerImage.getWidth(null), playerImage.getHeight(null));
+  }
+
 }
