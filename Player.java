@@ -190,29 +190,53 @@ public class Player {
       if (!panel.isVisible ()) return;
       
       if (direction == 1) {        // move left
-      playerImage = playerLeftImage;
-          newX = x - DX;
-      if (newX < 0) {
-        x = 0;
-        return;
-      }
-        
-      tilePos = collidesWithTile(newX, y);
-      }    
+         playerImage = playerLeftImage;
+            newX = x - DX;
+         if (newX < 0) {
+         x = 0;
+         return;
+         }
+         
+         tilePos = collidesWithTile(newX, y);
+         int playerWidth = playerImage.getWidth(null);
+
+         if (tilePos == null && tileMap.getDoor().isSolid()) {
+            if (tileMap.getDoor().collidesWithPlayer(
+                     newX, y,
+                     playerWidth,
+                     playerImage.getHeight(null))) {
+
+               // block movement on right side of door
+               x = tileMap.getDoor().getX() + tileMap.getDoor().getWidth();
+               return;
+            }
+         }
+      } 
       else                
       if (direction == 2) {        // move right
-      playerImage = playerRightImage;
-            int playerWidth = playerImage.getWidth(null);
-          newX = x + DX;
+         playerImage = playerRightImage;
+               int playerWidth = playerImage.getWidth(null);
+            newX = x + DX;
 
-            int tileMapWidth = tileMap.getWidthPixels();
+               int tileMapWidth = tileMap.getWidthPixels();
 
-      if (newX + playerImage.getWidth(null) >= tileMapWidth) {
-          x = tileMapWidth - playerImage.getWidth(null);
-          return;
-      }
+         if (newX + playerImage.getWidth(null) >= tileMapWidth) {
+            x = tileMapWidth - playerImage.getWidth(null);
+            return;
+         }
 
-      tilePos = collidesWithTile(newX+playerWidth, y);            
+         tilePos = collidesWithTile(newX+playerWidth, y);
+         if (tilePos == null && tileMap.getDoor().isSolid()) {
+            if (tileMap.getDoor().collidesWithPlayer(
+                  newX, y,
+                  playerWidth,
+                  playerImage.getHeight(null))) {
+      
+               // block movement on left side of door
+               x = tileMap.getDoor().getX() - playerWidth;
+               return;
+            }
+         }           
       }
       else                // jump
       if (direction == 3 && !jumping) {    
@@ -222,17 +246,15 @@ public class Player {
     
       if (tilePos != null) {  
          if (direction == 1) {
-         System.out.println (": Collision going left");
-             x = ((int) tilePos.getX() + 1) * TILE_SIZE;       // keep flush with right side of tile
-     }
+            System.out.println (": Collision going left");
+            x = ((int) tilePos.getX() + 1) * TILE_SIZE;       // keep flush with right side of tile
+         }
          else
          if (direction == 2) {
-         System.out.println (": Collision going right");
-               int playerWidth = playerImage.getWidth(null);
+            System.out.println (": Collision going right");
+            int playerWidth = playerImage.getWidth(null);
             x = ( ((int) tilePos.getX() ) * TILE_SIZE- playerWidth); // keep flush with left side of tile eg 15x32=448, 448-32=416 but the player can move an extra amount 
-           
-             
-     }
+         }
      }
       else {
           if (direction == 1) {
@@ -403,8 +425,8 @@ public class Player {
       return playerImage;
    }
 
-   public Rectangle getBounds() {
-      return new Rectangle(x, y, playerImage.getWidth(null), playerImage.getHeight(null));
+   public Rectangle2D.Double getBounds() {
+      return new Rectangle2D.Double(x, y, playerImage.getWidth(null), playerImage.getHeight(null));
   }
 
 }
