@@ -25,6 +25,7 @@ public class TileMap {
     private LinkedList sprites;
     private Player player;
     private Key key;
+    private Door door;
 
     BackgroundManager bgManager;
 
@@ -60,6 +61,7 @@ public class TileMap {
         tiles = new Image[mapWidth][mapHeight];
     player = new Player (panel, this, bgManager);
     key = new Key (panel, 200, 200, player);
+    door = new Door (panel, 1000, 275, player, key);
         sprites = new LinkedList();
 
     Image playerImage = player.getImage();
@@ -211,6 +213,8 @@ public class TileMap {
             }
         }
 
+        // draw door
+        door.draw(g2, offsetX);
 
         // draw player
 
@@ -221,6 +225,8 @@ public class TileMap {
 
         // draw key
         key.draw(g2, offsetX);
+
+        
 
 /*
         // draw sprites
@@ -285,11 +291,16 @@ public class TileMap {
     public void update() {
         player.update();
         key.update();
+        door.update();
 
         if (!key.isCollected() && player.getBounds().intersects(key.getBoundingRectangle())) {
             key.collect();
             System.out.println("Key collected!");
         }
+    }
+
+    public Door getDoor() {
+        return door;
     }
 
 }
