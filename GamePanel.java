@@ -37,6 +37,8 @@ public class GamePanel extends JPanel
 
     private boolean jumpWasPressed = false;
 
+    private Heart hearts;
+
     public GamePanel () {
 
         isRunning = false;
@@ -79,6 +81,11 @@ public class GamePanel extends JPanel
         if (!isPaused && isAnimShown)
            
         imageEffect.update();
+
+        if (hearts.isDead()){
+            System.out.println("GAME OVER"); // *** change this to the real game over method when implemented
+            endGame();
+        }
         
     }
 
@@ -90,6 +97,8 @@ public class GamePanel extends JPanel
         Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
         tileMap.draw (imageContext);
+
+        hearts.draw(imageContext);
 
         if (isAnimShown)
                  // draw the animation
@@ -124,6 +133,8 @@ public class GamePanel extends JPanel
             }
 
             createGameEntities();
+
+            hearts = new Heart(3);
 
             gameThread = new Thread(this);
             gameThread.start();            
@@ -164,8 +175,10 @@ public class GamePanel extends JPanel
         if (isRunning) {
             if (isPaused)
                 isPaused = false;
-            else
+            else{
                 isPaused = true;
+                hearts.loseLife();
+            }
 
           
         }
