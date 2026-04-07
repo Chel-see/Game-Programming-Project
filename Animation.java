@@ -56,7 +56,7 @@ public class Animation {
         Terminates this animation.
     */
     public synchronized void stop() {
-    isActive = true;
+    isActive = false;
     }
 
 
