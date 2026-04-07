@@ -23,9 +23,12 @@ public class TileMap {
     private int offsetY;
 
     private LinkedList sprites;
+
     private Player player;
     private Key key;
     private Door door;
+    private Villain [] villains ; 
+    private Coin [] coins;
 
     BackgroundManager bgManager;
 
@@ -58,11 +61,28 @@ public class TileMap {
 
     bgManager = new BackgroundManager (panel, 12);
 
-        tiles = new Image[mapWidth][mapHeight];
+    tiles = new Image[mapWidth][mapHeight];
+
     player = new Player (panel, this, bgManager);
+
     key = new Key (panel, 200, 200, player);
+
     door = new Door (panel, 1000, 275, player, key);
-        sprites = new LinkedList();
+
+    villains = new Villain [3];
+    villains[0] = new Villain(850, 280, player, 2);
+    villains[1] = new Villain(1050, 280, player, 3);
+    villains[2] = new Villain(1200, 280, player, 4);
+
+    coins = new Coin[6];
+    coins[0] = new Coin(100, 294, player);
+    coins[1] = new Coin(120, 294, player);
+    coins[2] = new Coin(140, 294, player);
+    coins[3] = new Coin(400, 70, player);
+    coins[4] = new Coin(420, 70, player);
+    coins[5] = new Coin(440, 70, player);
+
+    sprites = new LinkedList();
 
     Image playerImage = player.getImage();
     int playerHeight = playerImage.getHeight(null);
@@ -226,6 +246,16 @@ public class TileMap {
         // draw key
         key.draw(g2, offsetX);
 
+        // draw villain
+        for(int i=0; i< villains.length; i++){
+        villains[i].draw(g2,offsetX);
+        }
+
+        for(int i=0; i< coins.length; i++){
+         coins[i].draw(g2, offsetX);
+        }
+     
+
         
 
 /*
@@ -292,6 +322,16 @@ public class TileMap {
         player.update();
         key.update();
         door.update();
+        
+
+        for(int i=0; i< villains.length; i++){
+           villains[i].update();
+        }
+
+        for(int i=0; i< coins.length; i++){
+           coins[i].update();
+        }
+      
 
         if (!key.isCollected() && player.getBounds().intersects(key.getBoundingRectangle())) {
             key.collect();
