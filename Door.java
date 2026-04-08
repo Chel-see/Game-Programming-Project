@@ -95,4 +95,9 @@ public class Door {
 
         return doorRect.intersects(playerRect);
     }
+
+    public void reset() {
+        activated = finished = false;
+        animation.stop();
+    }
 }

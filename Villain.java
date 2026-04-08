@@ -49,11 +49,16 @@ public class Villain {
 
      
 
+     private int startX;
+     private int startY;
+
 
     public Villain(int xPos, int yPos, Player player, int anum) {
         x = xPos;
         y = yPos;
 
+        startX = xPos;
+        startY = yPos;
        
        leftBoundary = x-110; 
         rightBoundary = x+110; 
@@ -152,5 +157,10 @@ public class Villain {
         return myRect.intersects(playerRect);
     }
 
+    public void reset() {
+        // reset to original position
+        x = startX;
+        y = startY;
+    }
    
 }

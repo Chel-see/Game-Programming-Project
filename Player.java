@@ -372,11 +372,22 @@ public class Player {
         if (goingDown) {            
         Point tilePos = collidesWithTileDown (x, newY);    
            if (tilePos != null) {                // hits a tile going up
+            int offsetY = tileMap.getOffsetY();
+            int tileTopY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
+
+            // snap player to top of tile (same as normal landing)
+            y = tileTopY - playerImage.getHeight(null);
+
+            // THEN check water
+            if (checkWaterCollision(tilePos)) {
+               return;
+            }
+
             System.out.println ("Jumping: Collision Going Down!");
               int playerHeight = playerImage.getHeight(null);
             goingDown = false;
 
-                      int offsetY = tileMap.getOffsetY();
+                      //int offsetY = tileMap.getOffsetY();
             int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
 
                 y = topTileY - playerHeight;
@@ -428,4 +439,21 @@ public class Player {
       return new Rectangle2D.Double(x, y, playerImage.getWidth(null), playerImage.getHeight(null));
   }
 
+  private boolean checkWaterCollision(Point tilePos) {
+
+      if (tilePos == null || tileMap.isResetting()) return false;
+
+      if (tileMap.isWaterTile(
+            (int) tilePos.getX(),
+            (int) tilePos.getY())) {
+
+         System.out.println("Player stepped on water!");
+
+         tileMap.handlePlayerDeath();
+
+         return true;
+      }
+
+      return false;
+   }
 }

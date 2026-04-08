@@ -200,6 +200,8 @@ public class GameWindow extends JFrame
     // implement methods in KeyListener interface
 
     public void keyPressed(KeyEvent e) {
+        if (!gamePanel.canAcceptInput()) return;
+        
         int keyCode = e.getKeyCode();
         String keyText = e.getKeyText(keyCode);
         keyTF.setText(keyText + " pressed.");

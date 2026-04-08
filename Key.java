@@ -34,6 +34,9 @@ public class Key {
 
    private double scaleImage;
 
+   private int startX;
+   private int startY;
+
    public Key (JPanel p, int xPos, int yPos, Player player) {
       panel = p;
 
@@ -43,6 +46,9 @@ public class Key {
 
       x = xPos;
       y = yPos;
+
+      startX = xPos;
+      startY = yPos;
 
       dx = 20;
       dy = 20;
@@ -158,6 +164,12 @@ public class Key {
     public void collect() {
         collected = true;
         // Trigger sound or animation here
+    }
+
+    public void reset() {
+        collected = false;
+        x = startX;
+        y = startY;
     }
 
 }

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import javax.swing.Timer;
 
 /**
    A component that displays all the game entities
@@ -38,6 +39,8 @@ public class GamePanel extends JPanel
     private boolean jumpWasPressed = false;
 
     private Heart hearts;
+
+    private boolean gameOver = false;
 
     public GamePanel () {
 
@@ -82,7 +85,7 @@ public class GamePanel extends JPanel
            
         imageEffect.update();
 
-        if (hearts.isDead()){
+        if (gameOver){
             System.out.println("GAME OVER"); // *** change this to the real game over method when implemented
             endGame();
         }
@@ -236,6 +239,29 @@ public class GamePanel extends JPanel
         }
 
         jumpWasPressed = jumpPressed;
+    }
+
+    public void loseLife() {
+        hearts.loseLife();
+    }
+
+    public boolean isPlayerDead() {
+        return hearts.isDead();
+    }
+
+    public void respawnDelay(Runnable afterDelay) {
+        new javax.swing.Timer(2000, e -> {
+            afterDelay.run(); // call the actual reset after 2 seconds
+            ((javax.swing.Timer)e.getSource()).stop(); // stop timer
+        }).start();
+    }
+
+    public void gameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public boolean canAcceptInput() {
+        return tileMap != null && !tileMap.isResetting();
     }
 
 }

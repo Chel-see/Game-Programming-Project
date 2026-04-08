@@ -22,9 +22,17 @@ public class Coin {
 
    private Player player;
 
+   private int startX, startY;
+   private boolean collected;
+
     public Coin(int xPos, int yPos, Player player) {
     x = xPos;
     y = yPos;
+
+    startX = xPos;
+    startY = yPos;
+    collected = false;
+
     this.player = player;
     spin = new GridAnimation("Animated objects/Rune.png", 1, 4, true);
     spin.start();
@@ -35,7 +43,8 @@ public class Coin {
     public void update (){
         spin.update();
 
-        if (collidesWithPlayer()) {
+        if (!collected && collidesWithPlayer()) {
+            collected = true;
             fading = true;
             spin.stop();
         }
@@ -54,6 +63,8 @@ public class Coin {
 
 
     public void draw(Graphics2D g2,int offsetX) {
+
+        if (alpha <= 0) return;
 
       Image img = spin.getAnimationImage();
       BufferedImage original = new BufferedImage(
@@ -107,6 +118,17 @@ public class Coin {
     
     public boolean getFading(){return this.fading;}
     public int getAlpha(){return this.alpha;}
+
+   
+    public void reset() {
+        x = startX;
+        y = startY;
+        alpha = 255;
+        fading = false;
+        collected = false;
+        spin.start();
+    }
+
 
 }
 
