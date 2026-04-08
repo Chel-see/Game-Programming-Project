@@ -32,14 +32,19 @@ public class TileMap {
 
     BackgroundManager bgManager;
 
-    private JPanel panel;
+    //private JPanel panel;
+    private GamePanel panel;
     private Dimension dimension;
+
+    private char[][] tileTypes;
+
+    private boolean resetting = false;
 
     /**
         Creates a new TileMap with the specified width and
         height (in number of tiles) of the map.
     */
-    public TileMap(JPanel panel, int width, int height) {
+    public TileMap(GamePanel panel, int width, int height) {
 
     this.panel = panel;
     dimension = panel.getSize();
@@ -62,6 +67,7 @@ public class TileMap {
     bgManager = new BackgroundManager (panel, 12);
 
     tiles = new Image[mapWidth][mapHeight];
+    tileTypes = new char[mapWidth][mapHeight];
 
     player = new Player (panel, this, bgManager);
 
@@ -149,8 +155,9 @@ public class TileMap {
     /**
         Sets the tile at the specified location.
     */
-    public void setTile(int x, int y, Image tile) {
+    public void setTile(int x, int y, Image tile, char type) {
         tiles[x][y] = tile;
+        tileTypes[x][y] = type;
     }
 
 
@@ -341,6 +348,77 @@ public class TileMap {
 
     public Door getDoor() {
         return door;
+    }
+
+    public boolean isWaterTile(int x, int y) {
+        if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) {
+            return false;
+        }
+    
+        char t = tileTypes[x][y];
+    
+        return (t == 'J' || t == 'K' || t == 'L' || t == 'M');
+    }
+
+    public void loseLife(){
+        panel.loseLife();
+    }
+
+    public void resetPlayer() {
+
+        Image playerImage = player.getImage();
+        int playerHeight = playerImage.getHeight(null);
+    
+        int x = (dimension.width / 2) + TILE_SIZE;
+        int y = dimension.height - ((TILE_SIZE * 3) + playerHeight);
+    
+        player.setX(x);
+        player.setY(y);
+    
+        System.out.println("Player reset to start");
+    }
+
+    public boolean isResetting(){
+        return resetting;
+    }
+
+    public void handlePlayerDeath() {
+
+        if (resetting) return;
+    
+        resetting = true;
+    
+        loseLife();
+    
+            // If player still has lives → respawn
+    if (!panel.isPlayerDead()) {
+
+        panel.respawnDelay(() -> {
+
+            resetPlayer();
+            key.reset();
+            door.reset();
+
+            for (int i = 0; i < coins.length; i++) {
+                coins[i].reset();
+            }
+
+            for (int i = 0; i < villains.length; i++) {
+                villains[i].reset();
+            }
+
+            resetting = false;
+
+            System.out.println("Map reset");
+        });
+
+    } else {
+        // FINAL LIFE LOST → do NOTHING here
+        // GamePanel will handle game over rendering
+        panel.gameOver(true);
+
+        resetting = false; // allow rendering to continue normally
+    }
     }
 
 }

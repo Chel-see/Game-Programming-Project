@@ -37,10 +37,17 @@ public class Villain {
      private GridAnimation attack3;
      private GridAnimation attack4;
 
+     private int startX;
+     private int startY;
+
 
     public Villain(int xPos, int yPos, Player player, int anum) {
         x = xPos;
         y = yPos;
+
+        startX = xPos;
+        startY = yPos;
+
         this.player = player;
         idle = new GridAnimation("Swamp villains/Centipede/Centipede_sneer.png", 1, 6, true);
 
@@ -101,5 +108,10 @@ public class Villain {
         return myRect.intersects(playerRect);
     }
 
+    public void reset() {
+        // reset to original position
+        x = startX;
+        y = startY;
+    }
    
 }

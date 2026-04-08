@@ -16,7 +16,7 @@ public class TileMapManager {
     private ArrayList<Image> tiles;
     private int currentMap = 0;
 
-    private JPanel panel;
+    private GamePanel panel;
 
 /*
 
@@ -29,7 +29,7 @@ public class TileMapManager {
     private Sprite flySprite;
 */
 
-    public TileMapManager(JPanel panel) {
+    public TileMapManager(GamePanel panel) {
     this.panel = panel;
 
         loadTileImages();
@@ -77,7 +77,7 @@ public class TileMapManager {
                 // check if the char represents tile A, B, C etc.
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
-                    newMap.setTile(x, y, tiles.get(tile));
+                    newMap.setTile(x, y, tiles.get(tile), ch);
                 }
 /*
                 // check if the char represents a sprite
