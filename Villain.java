@@ -28,14 +28,26 @@ public class Villain {
 
    Animation animation;
 
-   private int frameNumber;
+     private int frameNumber;
 
-   private GridAnimation currentAnim;
-    private GridAnimation idle;
-    private GridAnimation attack;
+     private GridAnimation currentAnim;
+     private GridAnimation idle;
+     private GridAnimation attack;
      private GridAnimation attack2;
      private GridAnimation attack3;
      private GridAnimation attack4;
+     private GridAnimation walkLeft;
+     private GridAnimation walkRight;
+
+
+    int leftBoundary;
+    int rightBoundary;
+
+    private int direction = 1; 
+    private int speed = 3;
+    private boolean isAttacking = false;
+
+     
 
      private int startX;
      private int startY;
@@ -47,6 +59,9 @@ public class Villain {
 
         startX = xPos;
         startY = yPos;
+       
+       leftBoundary = x-110; 
+        rightBoundary = x+110; 
 
         this.player = player;
         idle = new GridAnimation("Swamp villains/Centipede/Centipede_sneer.png", 1, 6, true);
@@ -54,6 +69,9 @@ public class Villain {
         attack2= new GridAnimation("Swamp villains/Centipede/Centipede_attack2.png", 1, 6, true);
         attack3= new GridAnimation("Swamp villains/Centipede/Centipede_attack3.png", 1, 6, true);
         attack4= new GridAnimation("Swamp villains/Centipede/Centipede_attack4.png", 1, 4, true);
+
+        walkLeft= new GridAnimation("Swamp villains/Centipede/Centipede_walk.png", 1, 4, true);
+        walkRight= new GridAnimation("Swamp villains/Centipede/Centipede_walkRight.png", 1, 4, true);
 
         if (anum == 2) {
             attack = attack2;
@@ -63,19 +81,41 @@ public class Villain {
             attack = attack4;
         }
 
-        currentAnim = idle;
+        currentAnim = walkRight;
         currentAnim.start();
     }
 
     public void update() {
 
-        if(collidesWithPlayer()){
-            setAnimation("attack");
-           
-        }else{
-            setAnimation("idle");
+      if (collidesWithPlayer()) {
+        isAttacking = true;
+        setAnimation("attack");
+
+      } else {
+         isAttacking = false;
+      }
+   
+      if (!isAttacking) {
+
+        dx = speed * direction;
+        x += dx;
+
+        
+        if (x <= leftBoundary) {
+            direction = 1;
+        } else if (x >= rightBoundary) {
+            direction = -1;
         }
-        currentAnim.update();
+
+       
+        if (direction == 1) {
+            setAnimation("walkRight");
+        } else {
+            setAnimation("walkLeft");
+        }
+      }
+
+    currentAnim.update();
     }
 
     public void setAnimation(String name){
@@ -86,6 +126,15 @@ public class Villain {
             newAnim = attack;
       
         }
+        else if(name.equals("walkLeft")){
+            
+                newAnim = walkLeft;
+
+        }else if(name.equals("walkRight")){
+                newAnim = walkRight;
+            
+        }
+
         if(currentAnim!= newAnim){
             currentAnim=newAnim;
             currentAnim.start();
