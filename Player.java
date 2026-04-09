@@ -517,4 +517,8 @@ public class Player {
 
       return false;
    }
+
+   public void villainCollision() {
+      tileMap.handlePlayerDeath();
+   }
 }
