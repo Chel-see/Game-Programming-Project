@@ -42,6 +42,11 @@ public class GamePanel extends JPanel
 
     private boolean gameOver = false;
 
+    private GameTimer gameTimer;
+
+    private int coinCount = 0;
+    private Image coinImage;
+
     public GamePanel () {
 
         isRunning = false;
@@ -52,6 +57,8 @@ public class GamePanel extends JPanel
         soundManager = SoundManager.getInstance();
 
         image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
+
+        coinImage = ImageManager.loadImage("Animated objects/Rune-single.png");
     }
 
 
@@ -103,6 +110,19 @@ public class GamePanel extends JPanel
 
         hearts.draw(imageContext);
 
+        int coinCountX = 5;
+        int coinCountY = 40; // below hearts
+
+        imageContext.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        // draw coin icon
+        imageContext.drawImage(coinImage, coinCountX,coinCountY, 25, 25, null);
+
+        // draw text
+        imageContext.drawString("x " + coinCount, coinCountX + 30, coinCountY + 18);
+
+        gameTimer.draw(imageContext, getWidth(), isPaused);
+
         if (isAnimShown)
                  // draw the animation
 
@@ -139,9 +159,11 @@ public class GamePanel extends JPanel
 
             hearts = new Heart(3);
 
-            gameThread = new Thread(this);
-            gameThread.start();            
+            gameTimer = new GameTimer();
+            gameTimer.start();
 
+            gameThread = new Thread(this);
+            gameThread.start();
         }
     }
 
@@ -167,6 +189,11 @@ public class GamePanel extends JPanel
 
             createGameEntities();
 
+            if (gameTimer == null) {
+                gameTimer = new GameTimer();
+            }
+            gameTimer.start();
+
             gameThread = new Thread(this);
             gameThread.start();            
 
@@ -176,11 +203,13 @@ public class GamePanel extends JPanel
 
     public void pauseGame() {                // pause the game (don't update game entities)
         if (isRunning) {
-            if (isPaused)
+            if (isPaused){
                 isPaused = false;
+                gameTimer.start(); // resume timer when unpausing
+            }
             else{
                 isPaused = true;
-                hearts.loseLife();
+                gameTimer.pause(); // pause timer when pausing
             }
 
           
@@ -246,6 +275,7 @@ public class GamePanel extends JPanel
 
     public void loseLife() {
         hearts.loseLife();
+        this.coinCount = 0;
     }
 
     public boolean isPlayerDead() {
@@ -265,6 +295,10 @@ public class GamePanel extends JPanel
 
     public boolean canAcceptInput() {
         return tileMap != null && !tileMap.isResetting();
+    }
+
+    public void collectCoin() {
+        this.coinCount++;
     }
 
 }

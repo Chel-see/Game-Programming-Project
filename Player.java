@@ -402,24 +402,30 @@ public class Player {
        }
 
        if (goingUp) {
-        Point tilePos = collidesWithTileUp (x, newY);    
-           if (tilePos != null) {                // hits a tile going up
+            if (newY < 0) {
+                y = 0;
+                fall();
+                return;
+            }
+
+            Point tilePos = collidesWithTileUp (x, newY);    
+            if (tilePos != null) {                // hits a tile going up
                System.out.println ("Jumping: Collision Going Up!");
 
-                    int offsetY = tileMap.getOffsetY();
-            int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
-            int bottomTileY = topTileY + TILE_SIZE;
+               int offsetY = tileMap.getOffsetY();
+               int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
+               int bottomTileY = topTileY + TILE_SIZE;
 
                y = bottomTileY;
                fall();
-        }
-           else {
-            y = newY;
-            System.out.println ("Jumping: No collision.");
-           }
             }
-        else
-        if (goingDown) {            
+            else {
+               y = newY;
+               System.out.println ("Jumping: No collision.");
+            }
+      }
+      else
+      if (goingDown) {            
         Point tilePos = collidesWithTileDown (x, newY);    
            if (tilePos != null) {                // hits a tile going up
             int offsetY = tileMap.getOffsetY();
