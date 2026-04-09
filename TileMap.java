@@ -90,8 +90,9 @@ public class TileMap {
 
     sprites = new LinkedList();
 
-    Image playerImage = player.getImage();
-    int playerHeight = playerImage.getHeight(null);
+    
+
+    int playerHeight = player.getHeight();
 
     int x, y;
     x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
@@ -245,11 +246,9 @@ public class TileMap {
 
         // draw player
 
-        g2.drawImage(player.getImage(),
-            Math.round(player.getX()) + offsetX,
-            Math.round(player.getY()), //+ offsetY,
-            null);
+       // g2.drawImage(player.getImage(),Math.round(player.getX()) + offsetX,Math.round(player.getY()) + offsetY, player.getWidth(), player.getHeight(), null);
 
+       player.draw(g2, offsetX);
         // draw key
         key.draw(g2, offsetX);
 
@@ -311,6 +310,11 @@ public class TileMap {
 
     }
 
+    public void moveNowhere(){
+
+        player.move(0);
+    }
+
 
     public void jump() {
     int x, y;
@@ -366,11 +370,9 @@ public class TileMap {
 
     public void resetPlayer() {
 
-        Image playerImage = player.getImage();
-        int playerHeight = playerImage.getHeight(null);
     
         int x = (dimension.width / 2) + TILE_SIZE;
-        int y = dimension.height - ((TILE_SIZE * 3) + playerHeight);
+        int y = dimension.height - ((TILE_SIZE * 3) + player.getHeight());
     
         player.setX(x);
         player.setY(y);
