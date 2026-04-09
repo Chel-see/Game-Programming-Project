@@ -32,10 +32,12 @@ public class Villain {
 
      private GridAnimation currentAnim;
      private GridAnimation idle;
-     private GridAnimation attack;
-     private GridAnimation attack2;
-     private GridAnimation attack3;
-     private GridAnimation attack4;
+     private GridAnimation attack2_left;
+     private GridAnimation attack3_left;
+     private GridAnimation attack4_left;
+     private GridAnimation attack2_right;
+     private GridAnimation attack3_right;
+     private GridAnimation attack4_right;
      private GridAnimation walkLeft;
      private GridAnimation walkRight;
 
@@ -52,6 +54,7 @@ public class Villain {
      private int startX;
      private int startY;
 
+     private int attackType;
 
     public Villain(int xPos, int yPos, Player player, int anum) {
         x = xPos;
@@ -66,20 +69,17 @@ public class Villain {
         this.player = player;
         idle = new GridAnimation("Swamp villains/Centipede/Centipede_sneer.png", 1, 6, true);
 
-        attack2= new GridAnimation("Swamp villains/Centipede/Centipede_attack2.png", 1, 6, true);
-        attack3= new GridAnimation("Swamp villains/Centipede/Centipede_attack3.png", 1, 6, true);
-        attack4= new GridAnimation("Swamp villains/Centipede/Centipede_attack4.png", 1, 4, true);
+        attack2_left= new GridAnimation("Swamp villains/Centipede/Centipede_attack2_left.png", 1, 6, true);
+        attack3_left= new GridAnimation("Swamp villains/Centipede/Centipede_attack3_left.png", 1, 6, true);
+        attack4_left= new GridAnimation("Swamp villains/Centipede/Centipede_attack4_left.png", 1, 4, true);
+        attack2_right= new GridAnimation("Swamp villains/Centipede/Centipede_attack2_right.png", 1, 6, true);
+        attack3_right= new GridAnimation("Swamp villains/Centipede/Centipede_attack3_right.png", 1, 6, true);
+        attack4_right= new GridAnimation("Swamp villains/Centipede/Centipede_attack4_right.png", 1, 4, true);
 
         walkLeft= new GridAnimation("Swamp villains/Centipede/Centipede_walk.png", 1, 4, true);
         walkRight= new GridAnimation("Swamp villains/Centipede/Centipede_walkRight.png", 1, 4, true);
 
-        if (anum == 2) {
-            attack = attack2;
-        } else if (anum == 3) {
-            attack = attack3;
-        } else if (anum == 4) {
-            attack = attack4;
-        }
+        this.attackType=anum;
 
         currentAnim = walkRight;
         currentAnim.start();
@@ -89,7 +89,14 @@ public class Villain {
 
       if (collidesWithPlayer()) {
         isAttacking = true;
-        setAnimation("attack");
+
+        if (player.getX() < this.x){
+            setAnimation("attack_left");
+        }
+        else{
+            setAnimation("attack_right");
+        }
+        player.villainCollision();
 
       } else {
          isAttacking = false;
@@ -122,9 +129,22 @@ public class Villain {
         GridAnimation newAnim=null;
         if(name.equals("idle")){
             newAnim = idle;
-        }else if(name.equals("attack")){
-            newAnim = attack;
-      
+        }else if(name.equals("attack_left")){
+            if (attackType == 2) {
+                newAnim = attack2_left;
+            } else if (attackType == 3) {
+                newAnim = attack3_left;
+            } else if (attackType == 4) {
+                newAnim = attack4_left;
+            }
+        }else if(name.equals("attack_right")){
+            if (attackType == 2) {
+                newAnim = attack2_right;
+            } else if (attackType == 3) {
+                newAnim = attack3_right;
+            } else if (attackType == 4) {
+                newAnim = attack4_right;
+            }
         }
         else if(name.equals("walkLeft")){
             
