@@ -237,6 +237,9 @@ public class GamePanel extends JPanel
         if (jumpPressed && !jumpWasPressed) {
             tileMap.jump();
         }
+        if(!leftPressed && !rightPressed) {
+            tileMap.moveNowhere();
+        }
 
         jumpWasPressed = jumpPressed;
     }
