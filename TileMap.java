@@ -340,7 +340,11 @@ public class TileMap {
         }
 
         for(int i=0; i< coins.length; i++){
-           coins[i].update();
+           boolean collectedNow = coins[i].update();
+
+           if (collectedNow){
+                panel.collectCoin();
+           }
         }
       
 

@@ -40,13 +40,15 @@ public class Coin {
     }
 
 
-    public void update (){
+    public boolean update (){
         spin.update();
 
         if (!collected && collidesWithPlayer()) {
             collected = true;
             fading = true;
             spin.stop();
+
+            return true;
         }
         if(fading){
             alpha -= 15;
@@ -57,7 +59,8 @@ public class Coin {
         if (alpha <= 0){
             fading = false;  
         }
-
+        
+        return false;
     }
 
 
@@ -129,6 +132,9 @@ public class Coin {
         spin.start();
     }
 
+    public boolean isCollected() {
+        return collected;
+    }
 
 }
 
