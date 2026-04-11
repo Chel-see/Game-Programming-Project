@@ -330,6 +330,11 @@ public class GamePanel extends JPanel
 
     public void collectCoin() {
         this.coinCount++;
+
+        if (coinCount % 5 == 0) { // every 5 coins, gain an extra life
+            hearts.extraLife();
+            System.out.println("Extra life gained!");
+        }
     }
 
     public int getLevel(){
