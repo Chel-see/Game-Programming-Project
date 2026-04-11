@@ -86,7 +86,7 @@ public class TileMap {
     villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
     villains[2] = new Villain(12, 226, player, 4, 12, 110, 2);
 
-    coins = new Coin[6];
+    coins = new Coin[5];
     coins[0] = new Coin(0, 102, player);
     coins[1] = new Coin(720, 230, player);
     coins[2] = new Coin(198, 130, player);

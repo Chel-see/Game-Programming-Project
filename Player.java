@@ -375,10 +375,12 @@ public class Player {
 
           if (isInAir()) {
           System.out.println("In the air. Starting to fall.");
-          if (direction == 1) {                // make adjustment for falling on left side of tile
+
+         //this caused the error falling preventing falling to the left. i belive we can remove it
+         //  if (direction == 1) {                // make adjustment for falling on left side of tile
                 
-          x = x - width + DX;
-          }
+         //  x = x - width + DX;
+         //  }
           fall();
           }
       }
