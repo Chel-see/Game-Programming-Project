@@ -624,4 +624,10 @@ public class Player {
    public void villainCollision() {
       tileMap.handlePlayerDeath();
    }
+
+   // public void bladeCollision() {
+   //    tileMap.handlePlayerDeath();
+   // }
+
+
 }

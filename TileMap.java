@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class TileMap {
 
     private static final int TILE_SIZE = 32;
-   private static final int TILE_SIZE_BITS = 6;
+    private  int NUM_TILES ;
 
     private Image[][] tiles;
     private int screenWidth, screenHeight;
@@ -29,6 +29,8 @@ public class TileMap {
     private Door door;
     private Villain [] villains ; 
     private Coin [] coins;
+    private Blade blade;
+
 
     BackgroundManager bgManager;
 
@@ -39,6 +41,7 @@ public class TileMap {
     private char[][] tileTypes;
 
     private boolean resetting = false;
+    private boolean levelCompleted=false;
 
     private Stick stick;
 
@@ -47,29 +50,36 @@ public class TileMap {
         height (in number of tiles) of the map.
     */
     public TileMap(GamePanel panel, int width, int height) {
+        levelCompleted = false;
 
-    this.panel = panel;
-    dimension = panel.getSize();
+        this.panel = panel;
+        dimension = panel.getSize();
 
-    screenWidth = dimension.width;
-    screenHeight = dimension.height;
+        screenWidth = dimension.width;
+        screenHeight = dimension.height;
 
-    System.out.println ("Width: " + screenWidth);
-    System.out.println ("Height: " + screenHeight);
+        System.out.println ("Width: " + screenWidth);
+        System.out.println ("Height: " + screenHeight);
 
 
-    mapWidth = width;
-    mapHeight = height;
+        mapWidth = width;
+        mapHeight = height;
 
-        // get the y offset to draw all sprites and tiles
+            // get the y offset to draw all sprites and tiles
 
-           offsetY = screenHeight - tilesToPixels(mapHeight);
-    System.out.println("offsetY: " + offsetY);
+            offsetY = screenHeight - tilesToPixels(mapHeight);
+        System.out.println("offsetY: " + offsetY);
 
-    bgManager = new BackgroundManager (panel, 12);
+        bgManager = new BackgroundManager (panel, 12);
 
-    tiles = new Image[mapWidth][mapHeight];
-    tileTypes = new char[mapWidth][mapHeight];
+        tiles = new Image[mapWidth][mapHeight];
+        tileTypes = new char[mapWidth][mapHeight];
+
+
+        if (panel.getLevel() == 1) {
+        
+
+            NUM_TILES=3;
 
     this.stick = new Stick(panel, 730, 65, this); // choose position
 
@@ -93,24 +103,82 @@ public class TileMap {
     coins[3] = new Coin(280, 230, player);
     coins[4] = new Coin(995, 40, player);
 
-    sprites = new LinkedList();
-
-    
-
     int playerHeight = player.getHeight();
 
-    int x, y;
-    x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
+        int x, y;
+        x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
 
-    //x = 192;                    // position player in 'random' location
-    y = dimension.height - ((TILE_SIZE*3) + playerHeight);
+    
+        y = dimension.height - ((TILE_SIZE*NUM_TILES) + playerHeight);
 
-        player.setX(x);
-        player.setY(y);
+            player.setX(x);
+            player.setY(y);
 
-    System.out.println("Player coordinates: " + x + "," + y);
+        System.out.println("Player coordinates: " + x + "," + y);
+
+        }
+
+
+
+        if (panel.getLevel() == 2) {
+            NUM_TILES=5;
+
+            this.stick = new Stick(panel, 100, 100, this); // choose position
+
+            player = new Player (panel, this, bgManager);
+            key = new Key (panel, 500, 200, player);
+            
+            door = new Door (panel, 100, 210, player, key);
+
+            villains = new Villain [2];
+             villains[0] = new Villain(850, 322, player, 2, 55, 410, 3);
+             villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
+           
+
+            coins = new Coin[6];
+            coins[0] = new Coin(100, 200, player);
+            coins[1] = new Coin(110, 200, player);
+            coins[2] = new Coin(140, 200, player);
+            coins[3] = new Coin(100, 70, player);
+            coins[4] = new Coin(120, 70, player);
+            coins[5] = new Coin(140, 70, player);
+
+            blade = new Blade(745, 270, player);
+            
+
+
+
+
+             
+        int playerHeight = player.getHeight();
+
+        int x, y;
+        x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
+
+    
+        y = dimension.height - ((TILE_SIZE*NUM_TILES) + playerHeight);
+
+            player.setX(x);
+            player.setY(y);
+
+        System.out.println("Player coordinates: " + x + "," + y);
+
+        }
+
+        //blade = new Blade(250, 294, player);
+
+        sprites = new LinkedList();
+
+        
+
 
     }
+
+
+    // public void createLevelTwoEntities() {
+    //  Player player = new Player (panel, this, bgManager);
+    //   Key key = new Key (panel, 100, 200, player);    
+    // }
 
 
     /**
@@ -248,9 +316,12 @@ public class TileMap {
 
         // draw door
         door.draw(g2, offsetX);
+       // blade.draw(g2, offsetX);
 
         // draw stick
-        stick.draw(g2, offsetX);
+        if (stick!=null){
+            stick.draw(g2, offsetX);
+        }
 
         // draw player
 
@@ -258,7 +329,7 @@ public class TileMap {
 
        player.draw(g2, offsetX);
         // draw key
-        key.draw(g2, offsetX);
+       key.draw(g2, offsetX);
 
         // draw villain
         for(int i=0; i< villains.length; i++){
@@ -268,6 +339,12 @@ public class TileMap {
         for(int i=0; i< coins.length; i++){
          coins[i].draw(g2, offsetX);
         }
+
+        if(blade != null){
+            blade.draw(g2, offsetX);
+        }
+
+       
      
 
         
@@ -341,6 +418,10 @@ public class TileMap {
         player.update();
         key.update();
         door.update();
+        if(blade != null){
+            blade.update();
+        }
+        
         
 
         for(int i=0; i< villains.length; i++){
@@ -349,6 +430,7 @@ public class TileMap {
 
         for(int i=0; i< coins.length; i++){
            boolean collectedNow = coins[i].update();
+        
 
            if (collectedNow){
                 panel.collectCoin();
@@ -360,7 +442,20 @@ public class TileMap {
             key.collect();
             System.out.println("Key collected!");
         }
+        
+
+        if (!levelCompleted && door.collidesWithPlayer() && key.isCollected()&& door.AnimationFinished()) {
+            levelCompleted = true;
+            panel.endLevel();
+            return;
+         }
+
+
+
     }
+
+    
+
 
     public Door getDoor() {
         return door;
@@ -384,7 +479,7 @@ public class TileMap {
 
     
         int x = (dimension.width / 2) + TILE_SIZE;
-        int y = dimension.height - ((TILE_SIZE * 3) + player.getHeight());
+        int y = dimension.height - ((TILE_SIZE * NUM_TILES) + player.getHeight());
     
         player.setX(x);
         player.setY(y);

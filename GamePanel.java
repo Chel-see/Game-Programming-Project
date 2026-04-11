@@ -41,11 +41,15 @@ public class GamePanel extends JPanel
     private Heart hearts;
 
     private boolean gameOver = false;
+    
 
     private GameTimer gameTimer;
 
     private int coinCount = 0;
     private Image coinImage;
+
+    private boolean levelChange;
+    private int level;
 
     public GamePanel () {
 
@@ -59,6 +63,8 @@ public class GamePanel extends JPanel
         image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
 
         coinImage = ImageManager.loadImage("Animated objects/Rune-single.png");
+        level = 1;
+        levelChange = false;
     }
 
 
@@ -92,11 +98,36 @@ public class GamePanel extends JPanel
            
         imageEffect.update();
 
+
+          if (levelChange) {
+                levelChange = false;
+                tileManager = new TileMapManager (this);
+
+            try {
+                String filename = "maps/map" + level + ".txt";
+                tileMap = tileManager.loadMap(filename) ;
+         }
+            catch (Exception e) {        // no more maps: terminate game
+                gameOver = true;
+                System.out.println(e);
+              
+                return;
+            }
+        }
+
+
+
+
         if (gameOver){
             System.out.println("GAME OVER"); // *** change this to the real game over method when implemented
             endGame();
         }
         
+    }
+
+    public void endLevel() {
+        level = level + 1;
+        levelChange = true;
     }
 
 
@@ -306,4 +337,7 @@ public class GamePanel extends JPanel
         }
     }
 
+    public int getLevel(){
+        return this.level;   
+    }
 }
