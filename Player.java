@@ -48,6 +48,8 @@ public class Player {
 
    private GridAnimation currentAnim;
 
+   private Stick stick;
+
    public Player (JPanel panel, TileMap t, BackgroundManager b) {
       this.panel = panel;
 
@@ -69,6 +71,8 @@ public class Player {
       
       currentAnim=idle;
       currentAnim.start();
+
+      stick = tileMap.getStick();
    
    }
 
@@ -139,7 +143,7 @@ public class Player {
    }
 
 
-   public Point collidesWithTileDown (int newX, int newY) {
+/*    public Point collidesWithTileDown (int newX, int newY) {
 
             int offsetY = tileMap.getOffsetY();
             
@@ -164,7 +168,48 @@ public class Player {
       }
 
       return null;
-   }
+   } */
+
+      public Point collidesWithTileDown (int newX, int newY) {
+
+         int playerWidth = getWidth();
+         int playerHeight = getHeight();
+         int offsetY = tileMap.getOffsetY();
+         
+         int xTile = tileMap.pixelsToTiles(newX);
+         int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
+         int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
+     
+         // First, check if landing on a crate - if yes, return null (no tile collision)
+         Rectangle2D.Double futureBounds = new Rectangle2D.Double(newX, newY, playerWidth, playerHeight);
+
+         // ADD NULL CHECK HERE
+         if (stick != null && futureBounds.intersects(stick.getBounds())) {
+            // Check if landing ON TOP of stick
+            if (y + getHeight() <= stick.getY() + 5) {
+               return null; // Return null to prevent tile collision handling
+            }
+         }
+     
+         // Only check tile collisions if not landing on crate
+         for (int yTile = yTileFrom; yTile <= yTileTo; yTile++) {
+             if (tileMap.getTile(xTile, yTile) != null) {
+                 Point tilePos = new Point(xTile, yTile);
+                 return tilePos;
+             }
+             else {
+                 if (tileMap.getTile(xTile+1, yTile) != null) {
+                     int leftSide = (xTile + 1) * TILE_SIZE;
+                     if (newX + playerWidth > leftSide) {
+                         Point tilePos = new Point(xTile+1, yTile);
+                         return tilePos;
+                     }
+                 }
+             }
+         }
+     
+         return null;
+     }
 
 
    public Point collidesWithTileUp (int newX, int newY) {
@@ -242,6 +287,13 @@ public class Player {
          x = 0;
          return;
          }
+
+         if (stick.getBounds().intersects(new Rectangle2D.Double(newX, y, width, height))) {
+            boolean moved = stick.move(-DX);
+            if (!moved) {
+                return; // can't push → stop player
+            }
+        }
          
          tilePos = collidesWithTile(newX, y);
         
@@ -267,6 +319,14 @@ public class Player {
          if (newX + width >= tileMapWidth) {
             x = tileMapWidth - width;
             return;
+         }
+
+         // ADD THIS STICK PUSHING CODE FOR RIGHT MOVEMENT
+         if (stick != null && stick.getBounds().intersects(new Rectangle2D.Double(newX, y, width, height))) {
+            boolean moved = stick.move(DX);  // Positive DX for right push
+            if (!moved) {
+               return; // can't push → stop player
+            }
          }
 
          tilePos = collidesWithTile(newX+width, y);
@@ -325,7 +385,7 @@ public class Player {
    }
 
 
-   public boolean isInAir() {  // no longer uses collideswithTile, checks feet directly
+/*    public boolean isInAir() {  // no longer uses collideswithTile, checks feet directly
 
      
 
@@ -348,7 +408,29 @@ public class Player {
         
 
       return false;
-   }
+   } */
+
+      public boolean isInAir() {
+         if (!jumping && !inAir) {   
+             int offsetY = tileMap.getOffsetY();
+             int leftTile = tileMap.pixelsToTiles(x);
+             int rightTile = tileMap.pixelsToTiles(x + width - 1);
+             int yTile = tileMap.pixelsToTiles(y - offsetY + height + 1);
+             
+             // Check tiles below
+             if (tileMap.getTile(leftTile, yTile) == null &&
+                 tileMap.getTile(rightTile, yTile) == null) {
+                 
+                 // Also check if standing on stick
+                 Rectangle2D.Double feetBounds = new Rectangle2D.Double(x, y + height, width, 2);
+                 if (stick != null && feetBounds.intersects(stick.getBounds())) {
+                     return false; // Standing on stick
+                 }
+                 return true; // In air
+             }
+         }
+         return false;
+     }
 
 
    private void fall() {
@@ -379,7 +461,8 @@ public class Player {
       goingDown = false;
 
       startY = y;
-      initialVelocity = 70;
+      //initialVelocity = 70;
+      initialVelocity = 55;
    }
 
 
@@ -425,36 +508,48 @@ public class Player {
             }
       }
       else
-      if (goingDown) {            
-        Point tilePos = collidesWithTileDown (x, newY);    
-           if (tilePos != null) {                // hits a tile going up
-            int offsetY = tileMap.getOffsetY();
-            int tileTopY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
-
-            // snap player to top of tile (same as normal landing)
-            y = tileTopY - height;
-
-            // THEN check water
-            if (checkWaterCollision(tilePos)) {
-               return;
+         if (goingDown) {            
+            Point tilePos = collidesWithTileDown(x, newY);
+            
+            if (tilePos != null) {
+                // Landed on tile
+                int offsetY = tileMap.getOffsetY();
+                int tileTopY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
+                y = tileTopY - getHeight();
+                
+                if (checkWaterCollision(tilePos)) {
+                    return;
+                }
+                
+                System.out.println("Jumping: Collision Going Down!");
+                goingDown = false;
+                jumping = false;
+                inAir = false;
             }
-
-            System.out.println ("Jumping: Collision Going Down!");
-             
-            goingDown = false;
-
-                      //int offsetY = tileMap.getOffsetY();
-            int topTileY = ((int) tilePos.getY()) * TILE_SIZE + offsetY;
-
-                y = topTileY - height;
-              jumping = false;
-            inAir = false;
-           }
-           else {
-            y = newY;
-            System.out.println ("Jumping: No collision.");
-           }
-       }
+            else {
+                // Check for crate landing (since collidesWithTileDown returned null for crates)
+                boolean landedOnStick = false;
+                
+               Rectangle2D.Double futureBounds = new Rectangle2D.Double(x, newY, getWidth(), getHeight());
+                        
+               if (futureBounds.intersects(stick.getBounds())) {
+                  if (y + getHeight() <= stick.getY() + 10) {
+                     y = stick.getY() - getHeight();
+                     landedOnStick = true;
+                     goingDown = false;
+                     jumping = false;
+                     inAir = false;
+                     System.out.println("Landed on stick");
+                     //return;
+                  }
+                }
+                
+                if (!landedOnStick) {
+                    y = newY;
+                    System.out.println("Jumping: No collision.");
+                }
+            }
+        }
       }
    }
 
