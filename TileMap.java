@@ -79,7 +79,6 @@ public class TileMap {
         if (panel.getLevel() == 1) {
         
 
-            player = new Player (panel, this, bgManager);
             NUM_TILES=3;
 
     this.stick = new Stick(panel, 730, 65, this); // choose position
@@ -104,6 +103,8 @@ public class TileMap {
     coins[3] = new Coin(280, 230, player);
     coins[4] = new Coin(995, 40, player);
 
+    int playerHeight = player.getHeight();
+
         int x, y;
         x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
 
@@ -121,15 +122,18 @@ public class TileMap {
 
         if (panel.getLevel() == 2) {
             NUM_TILES=5;
+
+            this.stick = new Stick(panel, 100, 100, this); // choose position
+
             player = new Player (panel, this, bgManager);
             key = new Key (panel, 500, 200, player);
             
             door = new Door (panel, 100, 210, player, key);
 
             villains = new Villain [2];
-            villains[0] = new Villain(1200, 200, player, 2);
-       
-            villains[1] = new Villain(1200, 200, player, 4);
+             villains[0] = new Villain(850, 322, player, 2, 55, 410, 3);
+             villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
+           
 
             coins = new Coin[6];
             coins[0] = new Coin(100, 200, player);
@@ -140,6 +144,7 @@ public class TileMap {
             coins[5] = new Coin(140, 70, player);
 
             blade = new Blade(745, 270, player);
+            
 
 
 
@@ -314,7 +319,9 @@ public class TileMap {
        // blade.draw(g2, offsetX);
 
         // draw stick
-        stick.draw(g2, offsetX);
+        if (stick!=null){
+            stick.draw(g2, offsetX);
+        }
 
         // draw player
 
