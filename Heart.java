@@ -52,4 +52,14 @@ public class Heart {
     public boolean isDead() {
         return lives <= 0;
     }
+
+    public void extraLife() {
+        if (lives < maxLives) {
+            lives++;
+        }
+        else if (lives == maxLives){
+            this.maxLives++;
+            this.lives++;
+        }
+    }
 }

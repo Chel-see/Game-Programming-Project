@@ -40,6 +40,8 @@ public class TileMap {
 
     private boolean resetting = false;
 
+    private Stick stick;
+
     /**
         Creates a new TileMap with the specified width and
         height (in number of tiles) of the map.
@@ -69,24 +71,27 @@ public class TileMap {
     tiles = new Image[mapWidth][mapHeight];
     tileTypes = new char[mapWidth][mapHeight];
 
+    this.stick = new Stick(panel, 730, 65, this); // choose position
+
     player = new Player (panel, this, bgManager);
 
-    key = new Key (panel, 200, 200, player);
+    key = new Key (panel, 1820, 180, player);
 
-    door = new Door (panel, 1000, 275, player, key);
+    door = new Door (panel, 1350, 275, player, key);
+
+    
 
     villains = new Villain [3];
-    villains[0] = new Villain(850, 280, player, 2);
-    villains[1] = new Villain(1050, 280, player, 3);
-    villains[2] = new Villain(1200, 280, player, 4);
+    villains[0] = new Villain(850, 322, player, 2, 55, 410, 3);
+    villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
+    villains[2] = new Villain(12, 226, player, 4, 12, 110, 2);
 
-    coins = new Coin[6];
-    coins[0] = new Coin(100, 294, player);
-    coins[1] = new Coin(120, 294, player);
-    coins[2] = new Coin(140, 294, player);
-    coins[3] = new Coin(400, 70, player);
-    coins[4] = new Coin(420, 70, player);
-    coins[5] = new Coin(440, 70, player);
+    coins = new Coin[5];
+    coins[0] = new Coin(0, 102, player);
+    coins[1] = new Coin(720, 230, player);
+    coins[2] = new Coin(198, 130, player);
+    coins[3] = new Coin(280, 230, player);
+    coins[4] = new Coin(995, 40, player);
 
     sprites = new LinkedList();
 
@@ -243,6 +248,9 @@ public class TileMap {
 
         // draw door
         door.draw(g2, offsetX);
+
+        // draw stick
+        stick.draw(g2, offsetX);
 
         // draw player
 
@@ -404,6 +412,7 @@ public class TileMap {
             resetPlayer();
             key.reset();
             door.reset();
+            stick.reset();
 
             for (int i = 0; i < coins.length; i++) {
                 coins[i].reset();
@@ -425,6 +434,10 @@ public class TileMap {
 
         resetting = false; // allow rendering to continue normally
     }
+    }
+
+    public Stick getStick() {
+        return this.stick;
     }
 
 }

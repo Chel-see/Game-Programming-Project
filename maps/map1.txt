@@ -10,15 +10,15 @@
 #   2       Bad Guy 2 (fly)
 
                
-                 NNNN 
-          NNNOPPQ    OPPPPPQN  NNN
-       NNNN                        NOPPQNNN
-    NNNN                                  NNNN
-                                               NNNN
+                 NNNN          N
+          NNNOPPQ    OPPQN    NNNN
+N        NN                        NOPPQNNN
+NNN   N                                   NNN 
+                                               NNNNN
                                                       ABBC
-                AC                                    DERF
-               ASTC                                   DREF
-              ASEETC                                  DERF
-ABBBBBBBBBBBBBSEEEEF    ABBBBBBBBBBBBBBBBBBBBBBBC     DREF
-DEEEEEREEEEEEEEEEEETJKKLSEEEEEEEEEEEEEEEEEEEEEEETJKKLMSEEF
+ABBBBC                                                DERF
+DEEEETC                                               DREF
+DEEEEETC      ABBC                                    DERF
+DEEEEEEF  ABBBSEETBBBC  ABBBBBBBBBBBBBBBBBBBBBBBC     DREF
+DEEEEERTJLSEEEEEEEEEETJLSEEEEEEEEEEEEEEEEEEEEEEETJKKLMSEEF
 GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI

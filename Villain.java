@@ -14,8 +14,10 @@ public class Villain {
    private int x;
    private int y;
 
-   private int width=70;
-   private int height=75;
+   //private int width = 50;
+   //private int height = 37;
+   private int width = 50;
+   private int height = 32;
 
    private int dx;        // increment to move along x-axis
    private int dy;        // increment to move along y-axis
@@ -56,28 +58,30 @@ public class Villain {
 
      private int attackType;
 
-    public Villain(int xPos, int yPos, Player player, int anum) {
+    public Villain(int xPos, int yPos, Player player, int anum, int leftBound, int rightBound, int speed) {
         x = xPos;
         y = yPos;
 
         startX = xPos;
         startY = yPos;
        
-       leftBoundary = x-110; 
-        rightBoundary = x+110; 
+        leftBoundary = x-leftBound; 
+        rightBoundary = x+rightBound;
+
+        this.speed = speed;
 
         this.player = player;
-        idle = new GridAnimation("Swamp villains/Centipede/Centipede_sneer.png", 1, 6, true);
+        idle = new GridAnimation("Swamp villains/Centipede-new/Centipede_sneer.png", 1, 6, true);
 
-        attack2_left= new GridAnimation("Swamp villains/Centipede/Centipede_attack2_left.png", 1, 6, true);
-        attack3_left= new GridAnimation("Swamp villains/Centipede/Centipede_attack3_left.png", 1, 6, true);
-        attack4_left= new GridAnimation("Swamp villains/Centipede/Centipede_attack4_left.png", 1, 4, true);
-        attack2_right= new GridAnimation("Swamp villains/Centipede/Centipede_attack2_right.png", 1, 6, true);
-        attack3_right= new GridAnimation("Swamp villains/Centipede/Centipede_attack3_right.png", 1, 6, true);
-        attack4_right= new GridAnimation("Swamp villains/Centipede/Centipede_attack4_right.png", 1, 4, true);
+        attack2_left= new GridAnimation("Swamp villains/Centipede-new/Centipede_attack2_left.png", 1, 6, true);
+        attack3_left= new GridAnimation("Swamp villains/Centipede-new/Centipede_attack3_left.png", 1, 6, true);
+        attack4_left= new GridAnimation("Swamp villains/Centipede-new/Centipede_attack4_left.png", 1, 4, true);
+        attack2_right= new GridAnimation("Swamp villains/Centipede-new/Centipede_attack2_right.png", 1, 6, true);
+        attack3_right= new GridAnimation("Swamp villains/Centipede-new/Centipede_attack3_right.png", 1, 6, true);
+        attack4_right= new GridAnimation("Swamp villains/Centipede-new/Centipede_attack4_right.png", 1, 4, true);
 
-        walkLeft= new GridAnimation("Swamp villains/Centipede/Centipede_walk.png", 1, 4, true);
-        walkRight= new GridAnimation("Swamp villains/Centipede/Centipede_walkRight.png", 1, 4, true);
+        walkLeft= new GridAnimation("Swamp villains/Centipede-new/Centipede_walk.png", 1, 4, true);
+        walkRight= new GridAnimation("Swamp villains/Centipede-new/Centipede_walkRight.png", 1, 4, true);
 
         this.attackType=anum;
 
@@ -167,7 +171,8 @@ public class Villain {
     }
 
     public Rectangle2D.Double getBoundingRectangle() {
-        return new Rectangle2D.Double(this.x, this.y,this.width, this.height);
+        //return new Rectangle2D.Double(this.x, this.y,this.width-15, this.height);
+        return new Rectangle2D.Double(this.x, this.y,this.width-15, this.height);
     }
 
   public boolean collidesWithPlayer() {
