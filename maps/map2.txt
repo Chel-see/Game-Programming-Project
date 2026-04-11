@@ -10,14 +10,14 @@
 #   2       Bad Guy 2 (fly)
 
 
-                   NNNNNNNN
+                                    NNNNNNNN
 
-                                       UBBC
-       ABBBBBC        NNNNNN          USEEF
-      AS     TBBBBC                  USEEEF
-    ABS                             USEEEEF
-ABBBSEE                            USRRERRF
-DEEREEEOPPPPQ              ABBBBBBBSERRRRRF
-DREEEEEEEERJKLKLMR         DEEEEREEEEERRREF
-DEEREEEEREEEEEEEEEJKLKLKLKMSEEEEEEREEEEREEF
-GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI
+                                                       UBBC
+                       ABBBBBC        NNNNNN          USEEF
+                      AS     TBBBBC                  USEEEF
+                    ABS                             USEEEEF
+ABBBBBBBBBBBBBBBBBBBSEE                            USRRERRF
+DEEEEEEEEEEEEEEEEEEREEEOPPPPQ              ABBBBBBBSERRRRRF
+DREEEEEEEEEREEEEEEEEEEEEEERJKLKLMR         DEEEEREEEEERRREF
+DEEREEEEEERRRRRRRRREEEEEREEEEEEEEEJKLKLKLKMSEEEEEEREEEEREEF
+GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI

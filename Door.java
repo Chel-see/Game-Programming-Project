@@ -100,4 +100,8 @@ public class Door {
         activated = finished = false;
         animation.stop();
     }
+
+    public boolean AnimationFinished() {
+        return finished;
+    }
 }
