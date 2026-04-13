@@ -30,6 +30,7 @@ public class TileMap {
     private Villain [] villains ; 
     private Coin [] coins;
     private Blade blade;
+    private Axe axe;
 
 
     BackgroundManager bgManager;
@@ -81,35 +82,36 @@ public class TileMap {
 
             NUM_TILES=3;
 
-    this.stick = new Stick(panel, 730, 65, this); // choose position
+            this.stick = new Stick(panel, 730, 65, this); // choose position
 
-    player = new Player (panel, this, bgManager);
+            player = new Player (panel, this, bgManager);
 
-    key = new Key (panel, 1820, 180, player);
+            key = new Key (panel, 1820, 180, player);
 
-    door = new Door (panel, 1350, 275, player, key);
+            door = new Door (panel, 1350, 275, player, key);
 
-    
+            
 
-    villains = new Villain [3];
-    villains[0] = new Villain(850, 322, player, 2, 55, 410, 3);
-    villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
-    villains[2] = new Villain(12, 226, player, 4, 12, 110, 2);
+            villains = new Villain [3];
+            villains[0] = new Villain(850, 322, player, 2, 55, 410, 3);
+            villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
+            villains[2] = new Villain(12, 226, player, 4, 12, 110, 2);
 
-    coins = new Coin[5];
-    coins[0] = new Coin(0, 102, player);
-    coins[1] = new Coin(720, 230, player);
-    coins[2] = new Coin(198, 130, player);
-    coins[3] = new Coin(280, 230, player);
-    coins[4] = new Coin(995, 40, player);
+            coins = new Coin[5];
+            coins[0] = new Coin(0, 102, player);
+            coins[1] = new Coin(720, 230, player);
+            coins[2] = new Coin(198, 130, player);
+            coins[3] = new Coin(280, 230, player);
+            coins[4] = new Coin(995, 40, player);
 
-    int playerHeight = player.getHeight();
 
-        int x, y;
-        x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
+            int playerHeight = player.getHeight();
 
-    
-        y = dimension.height - ((TILE_SIZE*NUM_TILES) + playerHeight);
+                int x, y;
+                x = (dimension.width / 2) + TILE_SIZE;        // position player in middle of screen
+
+            
+                y = dimension.height - ((TILE_SIZE*NUM_TILES) + playerHeight);
 
             player.setX(x);
             player.setY(y);
@@ -144,12 +146,9 @@ public class TileMap {
             coins[5] = new Coin(140, 70, player);
 
             blade = new Blade(745, 270, player);
-            
+            axe=new Axe(650,100,player);
 
 
-
-
-             
         int playerHeight = player.getHeight();
 
         int x, y;
@@ -344,6 +343,10 @@ public class TileMap {
             blade.draw(g2, offsetX);
         }
 
+        if(axe != null){
+            axe.draw(g2, offsetX);
+        }
+
        
      
 
@@ -415,11 +418,16 @@ public class TileMap {
 
 
     public void update() {
+
         player.update();
         key.update();
         door.update();
+
         if(blade != null){
             blade.update();
+        }
+        if(axe != null){
+            axe.update();
         }
         
         
