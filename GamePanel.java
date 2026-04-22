@@ -200,35 +200,42 @@ public class GamePanel extends JPanel
 
 
     public void startNewGame() {                // initialise and start a new game thread 
-        if (gameThread != null || !isRunning) {
-            //soundManager.playSound ("background", true);
+        // if (gameThread != null || !isRunning) {
+        //     //soundManager.playSound ("background", true);
 
-            tileManager = new TileMapManager (this);
+        //     tileManager = new TileMapManager (this);
 
-            try {
-                tileMap = tileManager.loadMap("maps/map2.txt");
-                int w, h;
-                w = tileMap.getWidth();
-                h = tileMap.getHeight();
-                System.out.println ("Width of tilemap " + w);
-                System.out.println ("Height of tilemap " + h);
+        //     try {
+        //         tileMap = tileManager.loadMap("maps/map2.txt");
+        //         int w, h;
+        //         w = tileMap.getWidth();
+        //         h = tileMap.getHeight();
+        //         System.out.println ("Width of tilemap " + w);
+        //         System.out.println ("Height of tilemap " + h);
+        //     }
+        //     catch (Exception e) {
+        //         System.out.println(e);
+        //         System.exit(0);
+        //     }
+
+        //     createGameEntities();
+
+        //     if (gameTimer == null) {
+        //         gameTimer = new GameTimer();
+        //     }
+        //     gameTimer.start();
+
+        //     gameThread = new Thread(this);
+        //     gameThread.start();            
+
+        // }
+
+            if (gameThread != null) {   // remove this after testing phase
+                this.level = 2;
+                levelChange = true;
             }
-            catch (Exception e) {
-                System.out.println(e);
-                System.exit(0);
-            }
 
-            createGameEntities();
 
-            if (gameTimer == null) {
-                gameTimer = new GameTimer();
-            }
-            gameTimer.start();
-
-            gameThread = new Thread(this);
-            gameThread.start();            
-
-        }
     }
 
 
