@@ -68,7 +68,7 @@ public class GameWindow extends JFrame
             startB = new JButton ("Start Game");
             pauseB = new JButton ("Pause Game");
             endB = new JButton ("End Game");
-        startNewB = new JButton ("Start New Game");
+        startNewB = new JButton ("Switch to Level 2");
             focusB = new JButton ("Show Animation");
         exitB = new JButton ("Exit");
 
