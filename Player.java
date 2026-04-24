@@ -1,11 +1,9 @@
-//import java.awt.Dimension;
+
 import java.awt.Graphics2D;
 
 import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
-// import javax.swing.JPanel;
-// import java.awt.Image;
-// import javax.swing.ImageIcon;
+
 import java.awt.Point;
 
 public class Player {            
@@ -23,9 +21,6 @@ public class Player {
    private int y;            // y-position of player's sprite
 
    Graphics2D g2;
-   //private Dimension dimension;
-
-   //private Image playerImage, playerLeftImage, playerRightImage;
 
    private boolean jumping;
    private int timeElapsed;
@@ -35,6 +30,8 @@ public class Player {
    private boolean goingDown;
 
    private boolean inAir;
+   private boolean splashPlayed=false;
+
    private int initialVelocity;
    private int startAir;
    private int width;
@@ -49,6 +46,7 @@ public class Player {
    private GridAnimation currentAnim;
 
    private Stick stick;
+   private SoundManager soundManager;
 
    public Player (JPanel panel, TileMap t, BackgroundManager b) {
       this.panel = panel;
@@ -73,6 +71,8 @@ public class Player {
       currentAnim.start();
 
       stick = tileMap.getStick();
+      soundManager = SoundManager.getInstance();
+      soundManager.setVolume("splash", 0.85f);
    
    }
 
@@ -520,6 +520,11 @@ public class Player {
                 y = tileTopY - getHeight();
                 
                 if (checkWaterCollision(tilePos)) {
+                  if(!splashPlayed){
+                     soundManager.playSound("splash", false);
+                     splashPlayed=true;
+                  }
+                  splashPlayed=false;
                     return;
                 }
                 

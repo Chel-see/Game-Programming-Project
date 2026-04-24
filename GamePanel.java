@@ -65,6 +65,8 @@ public class GamePanel extends JPanel
         coinImage = ImageManager.loadImage("Animated objects/Rune-single.png");
         level = 1;
         levelChange = false;
+
+        soundManager.setVolume("background", 0.85f);
     }
 
 
@@ -169,7 +171,7 @@ public class GamePanel extends JPanel
     public void startGame() {                // initialise and start the game thread 
 
         if (gameThread == null) {
-            //soundManager.playSound ("background", true);
+            soundManager.playSound ("background", true);
 
             tileManager = new TileMapManager (this);
 
@@ -257,7 +259,7 @@ public class GamePanel extends JPanel
 
     public void endGame() {                    // end the game thread
         isRunning = false;
-        //soundManager.stopClip ("background");
+        soundManager.stopSound("background");
     }
 
     

@@ -1,4 +1,4 @@
-import javax.sound.sampled.AudioInputStream;		// for playing sound clips
+// for playing sound clips
 import javax.sound.sampled.*;
 import java.io.*;
 
@@ -8,9 +8,7 @@ import java.util.HashMap;				// for storing sound clips
 public class SoundManager {				// a Singleton class
 	HashMap<String, Clip> clips;
 
-   	Clip hitClip = null;				// played when bat hits ball
-   	Clip appearClip = null;				// played when ball is re-generated
-   	Clip backgroundClip = null;			// played continuously after ball is created
+	private float volume;
 
 	private static SoundManager instance = null;	// keeps track of Singleton instance
 
@@ -18,19 +16,24 @@ public class SoundManager {				// a Singleton class
 		Clip clip;
 		clips = new HashMap<String, Clip>();
 		
-		//Clip clip = loadClip("sounds/background.wav");
-		//clips.put("background", clip);		// background theme sound
+	
 
-		clip = loadClip("sounds/hitSound.wav");
-		clips.put("hit", clip);			// played when player's sprite collides 
-							//   with another sprice
+		clip = loadClip("sounds/RiverSound.wav");
+		clips.put("background", clip);	
+		
+		clip = loadClip("sounds/KeyCollected.wav");
+		clips.put("key", clip);
 
-		clip = loadClip("sounds/appearSound.wav");
-		clips.put("appear", clip);		// played when a special sprite 
-							//   makes an appearance
+		clip = loadClip("sounds/RuneCollected.wav");
+		clips.put("coin", clip);
 
-		clip = loadClip("sounds/BirdSound.wav");
-		clips.put("birdSound", clip);		// played for bird-flying animation
+		clip = loadClip("sounds/Growl.wav");
+		clips.put("growl", clip);
+
+		clip = loadClip("sounds/Splash.wav");
+		clips.put("splash", clip);
+				
+
 	}
 
 
@@ -83,5 +86,16 @@ public class SoundManager {				// a Singleton class
 			clip.stop();
 		}
     	}
+
+		 public void setVolume (String title, float volume) {
+        Clip clip = getClip(title);
+
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+    
+        float range = gainControl.getMaximum() - gainControl.getMinimum();
+        float gain = (range * volume) + gainControl.getMinimum();
+
+        gainControl.setValue(gain);
+    }
 
 }

@@ -7,8 +7,8 @@ import java.lang.Math;
 
 public class Axe {
 
-    private static final int WIDTH = 77; 
-    private static final int HEIGHT = 110;  
+    private static final int WIDTH = 67; 
+    private static final int HEIGHT = 95;  
 
    private  int pivotX ;
    private  int pivotY ;
@@ -35,9 +35,9 @@ public class Axe {
         this.player = player;
 
         degreeRange = 60;
-        startDegree = -30;
-        endDegree = 30;
-        degreeChange = 2;
+        startDegree = -60;
+        endDegree = 60;
+        degreeChange = 4;
 
       degree = startDegree;
     
