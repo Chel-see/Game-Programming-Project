@@ -24,7 +24,7 @@ public class Key {
    private Player player;
    private SoundManager soundManager;
   
-   private boolean soundPlayed;
+   private boolean keyColSound=false;
 
    Animation animation;
 
@@ -85,14 +85,13 @@ public class Key {
         width = (int) (imageWidth * scaleImage);
         height = (int) (imageHeight * scaleImage);
 
-      soundManager = SoundManager.getInstance();
 
       frameNumber = 0;
 
-      soundPlayed = false;
-
       collected = false;
       animation.start();
+      soundManager = SoundManager.getInstance();
+      soundManager.setVolume("key", 0.85f);
    }
 
 
@@ -163,13 +162,19 @@ public class Key {
 
     public void collect() {
         collected = true;
+        if(!keyColSound){
+            soundManager.playSound("key", false);
+            keyColSound = true;
+        }
         // Trigger sound or animation here
     }
 
     public void reset() {
         collected = false;
+        keyColSound = false;
         x = startX;
         y = startY;
+       
     }
 
 }

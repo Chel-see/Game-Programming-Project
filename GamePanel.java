@@ -103,6 +103,7 @@ public class GamePanel extends JPanel
         level = 1;
         levelChange = false;
 
+        soundManager.setVolume("background", 0.85f);
         gameFont = loadFont("fonts/Not Jam Third Dimension 15.ttf");
         bannerFont = loadFont("fonts/Not Jam Mono Clean 13");
 
@@ -384,7 +385,7 @@ public class GamePanel extends JPanel
     public void startGame() {                // initialise and start the game thread 
 
         if (gameThread == null) {
-            //soundManager.playSound ("background", true);
+            soundManager.playSound ("background", true);
 
             tileManager = new TileMapManager (this);
 
@@ -475,7 +476,7 @@ public class GamePanel extends JPanel
 
     public void endGame() {                    // end the game thread
         isRunning = false;
-        //soundManager.stopClip ("background");
+        soundManager.stopSound("background");
     }
 
     

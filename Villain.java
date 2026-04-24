@@ -25,8 +25,9 @@ public class Villain {
 
    private Player player;
    private SoundManager soundManager;
+    private boolean growled=false;
   
-   private boolean soundPlayed;
+
 
    Animation animation;
 
@@ -87,6 +88,10 @@ public class Villain {
 
         currentAnim = walkRight;
         currentAnim.start();
+
+        
+        soundManager = SoundManager.getInstance();
+        soundManager.setVolume("growl", 0.8f);
     }
 
     public void update() {
@@ -94,13 +99,18 @@ public class Villain {
       if (collidesWithPlayer()) {
         isAttacking = true;
 
+        if(!growled){ // so it only starts once 
+            soundManager.playSound("growl", false);
+            growled=true;
+        }
+
         if (player.getX() < this.x){
             setAnimation("attack_left");
         }
         else{
             setAnimation("attack_right");
         }
-        player.villainCollision();
+        player.harmfulCollision();
 
       } else {
          isAttacking = false;
@@ -186,6 +196,7 @@ public class Villain {
         // reset to original position
         x = startX;
         y = startY;
+        growled=false;
     }
    
 }

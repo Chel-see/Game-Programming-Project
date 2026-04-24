@@ -21,9 +21,11 @@ public class Coin {
    
 
    private Player player;
+   private SoundManager soundManager;
 
    private int startX, startY;
    private boolean collected;
+   private boolean playColSound = false;
 
     public Coin(int xPos, int yPos, Player player) {
     x = xPos;
@@ -36,6 +38,9 @@ public class Coin {
     this.player = player;
     spin = new GridAnimation("Animated objects/Rune.png", 1, 4, true);
     spin.start();
+  
+    soundManager = SoundManager.getInstance();
+    soundManager.setVolume("coin", 0.8f);
 
     }
 
@@ -44,6 +49,11 @@ public class Coin {
         spin.update();
 
         if (!collected && collidesWithPlayer()) {
+
+            if(!playColSound){
+                soundManager.playSound("coin", false);
+                playColSound = true;
+            }
             collected = true;
             fading = true;
             spin.stop();
@@ -129,6 +139,7 @@ public class Coin {
         alpha = 255;
         fading = false;
         collected = false;
+        playColSound = false;
         spin.start();
     }
 

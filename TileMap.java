@@ -29,7 +29,7 @@ public class TileMap {
     private Door door;
     private Villain [] villains ; 
     private Coin [] coins;
-    private Blade blade;
+    private Blade [] blades;
     private Axe axe;
 
 
@@ -123,18 +123,18 @@ public class TileMap {
 
 
         if (panel.getLevel() == 2) {
-            NUM_TILES=5;
+            NUM_TILES=4;
 
             this.stick = new Stick(panel, 100, 100, this); // choose position
 
             player = new Player (panel, this, bgManager);
-            key = new Key (panel, 500, 200, player);
+            key = new Key (panel, 523, 270 ,  player);
             
             door = new Door (panel, 100, 210, player, key);
 
             villains = new Villain [2];
-             villains[0] = new Villain(850, 322, player, 2, 55, 410, 3);
-             villains[1] = new Villain(1420, 322, player, 3, 0, 100, 8);
+             villains[0] = new Villain(850, 322, player, 2, 55, 410, 1);
+             villains[1] = new Villain(1420, 322, player, 3, 0, 100, 1);
            
 
             coins = new Coin[6];
@@ -145,8 +145,11 @@ public class TileMap {
             coins[4] = new Coin(120, 70, player);
             coins[5] = new Coin(140, 70, player);
 
-            blade = new Blade(745, 270, player);
-            axe=new Axe(650,100,player);
+            blades = new Blade[3];
+            blades[0] = new Blade(560, 225, 20, player,this);
+            blades[1] = new Blade(620, 225, 40, player,this);
+            blades[2] = new Blade(680, 225, 80, player,this);
+            axe=new Axe(1060,30,player);
 
             panel.resetHearts();
 
@@ -234,6 +237,14 @@ public class TileMap {
         tiles[x][y] = tile;
         tileTypes[x][y] = type;
     }
+
+    public boolean isTile(int col, int row) {
+    if (col < 0 || col >= mapWidth || row < 0 || row >= mapHeight) {
+        return false;
+    }
+    return tiles[col][row] != null;
+    }
+
 
 
     /**
@@ -341,8 +352,11 @@ public class TileMap {
          coins[i].draw(g2, offsetX);
         }
 
-        if(blade != null){
-            blade.draw(g2, offsetX);
+        if(blades != null){
+            for(int i=0; i< blades.length; i++){
+                blades[i].draw(g2, offsetX);
+            }
+            
         }
 
         if(axe != null){
@@ -425,9 +439,12 @@ public class TileMap {
         key.update();
         door.update();
 
-        if(blade != null){
-            blade.update();
+        if(blades != null){
+            for(int i=0; i< blades.length; i++){
+                blades[i].update();
+            }
         }
+
         if(axe != null){
             axe.update();
         }
@@ -525,6 +542,14 @@ public class TileMap {
 
             for (int i = 0; i < villains.length; i++) {
                 villains[i].reset();
+            }
+            if(blades != null){
+                for (int i = 0; i < blades.length; i++) {
+                    blades[i].reset();
+                }
+            }
+            if(axe != null){
+                axe.reset();
             }
 
             resetting = false;
