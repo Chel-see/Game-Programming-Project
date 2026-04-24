@@ -148,6 +148,8 @@ public class TileMap {
             blade = new Blade(745, 270, player);
             axe=new Axe(650,100,player);
 
+            panel.resetHearts();
+
 
         int playerHeight = player.getHeight();
 
