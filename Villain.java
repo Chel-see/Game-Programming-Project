@@ -110,7 +110,7 @@ public class Villain {
         else{
             setAnimation("attack_right");
         }
-        player.villainCollision();
+        player.harmfulCollision();
 
       } else {
          isAttacking = false;

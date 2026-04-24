@@ -32,7 +32,9 @@ public class SoundManager {				// a Singleton class
 
 		clip = loadClip("sounds/Splash.wav");
 		clips.put("splash", clip);
-				
+		
+		clip = loadClip("sounds/Slash.wav");
+		clips.put("slice", clip);
 
 	}
 

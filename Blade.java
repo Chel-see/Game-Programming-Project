@@ -27,12 +27,20 @@ public class Blade {
 
     TileMap tileMap;
 
+    private int startX , startY;
+     private SoundManager soundManager;
+    private boolean slashSound=false;
+
     
 
 
   public Blade(int xPos, int yPos,int seconds, Player player, TileMap tileMap ) {
         this.x = xPos;
         this.y = yPos;
+
+        this.startX=xPos;
+        this.startY=yPos;
+
         this.originalY=yPos;
         this.player = player;
 
@@ -43,11 +51,13 @@ public class Blade {
         angle = 5;               
         angleChange = 5;
        
-        img = ImageManager.loadImage("Additional objects/Saw.png");       
+        img = ImageManager.loadImage("Additional objects/Saw.png"); 
+        soundManager = SoundManager.getInstance();
+       soundManager.setVolume("slice", 0.85f);       
   }
 
   public Rectangle2D.Double getBoundingRectangle() {
-        return new Rectangle2D.Double(x, y, WIDTH-10, HEIGHT-10);
+        return new Rectangle2D.Double(x+10, y+10, WIDTH-10, HEIGHT-10);
     }
 
      public boolean collidesWithPlayer() {
@@ -93,7 +103,12 @@ public class Blade {
             angle = 5;
 
          if(collidesWithPlayer()){
-            System.out.println("Player Collided with Blade");
+            if(!slashSound){
+            soundManager.playSound("slice",false);
+            slashSound=true;
+             }
+
+            player.harmfulCollision();
          }
          drop();
    
@@ -150,6 +165,13 @@ public class Blade {
                 }
             }
     }
+
+     public void reset(){
+          x=startX;
+          y=startY;
+          slashSound=false;
+          
+      }
 
 
 

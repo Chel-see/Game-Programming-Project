@@ -541,6 +541,14 @@ public class TileMap {
             for (int i = 0; i < villains.length; i++) {
                 villains[i].reset();
             }
+            if(blades != null){
+                for (int i = 0; i < blades.length; i++) {
+                    blades[i].reset();
+                }
+            }
+            if(axe != null){
+                axe.reset();
+            }
 
             resetting = false;
 
