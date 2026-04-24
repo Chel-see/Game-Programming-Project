@@ -139,6 +139,12 @@ public class GameWindow extends JFrame
         // set up mainPanel to respond to keyboard and mouse
 
         gamePanel.addMouseListener(this);
+        // for restart button hover effect:
+        gamePanel.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseMoved(MouseEvent e) {
+                gamePanel.handleMouseMove(e);
+            }
+        });
         mainPanel.addKeyListener(this);
 
         // add mainPanel to window surface
@@ -185,7 +191,8 @@ public class GameWindow extends JFrame
         }
 
         if (command.equals(startNewB.getText()))
-            gamePanel.startNewGame();
+            //gamePanel.startNewGame();
+        gamePanel.endLevel();
 
         if (command.equals(focusB.getText()))
             gamePanel.showAnimation();
@@ -263,11 +270,12 @@ public class GameWindow extends JFrame
     }
 
     public void mousePressed(MouseEvent e) {
+        gamePanel.handleMousePress(e);
     
     }
 
     public void mouseReleased(MouseEvent e) {
-    
+        gamePanel.handleMouseRelease(e);
     }
 
 }

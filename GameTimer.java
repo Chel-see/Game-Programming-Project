@@ -48,7 +48,7 @@ public class GameTimer {
         }
     }
 
-    private String formatTime(long timeMillis) {
+    public String formatTime(long timeMillis) {
         long seconds = timeMillis / 1000;
         long minutes = seconds / 60;
         seconds = seconds % 60;
