@@ -62,4 +62,9 @@ public class Heart {
             this.lives++;
         }
     }
+
+    public void reset(int newMaxLives) {
+        this.maxLives = newMaxLives;
+        this.lives = newMaxLives;
+    }
 }
