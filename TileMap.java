@@ -128,17 +128,17 @@ public class TileMap {
             this.stick = new Stick(panel, 100, 100, this); // choose position
 
             player = new Player (panel, this, bgManager);
-            key = new Key (panel, 523, 270 ,  player);
+            key = new Key (panel, 550, 270 ,  player);
             
-            door = new Door (panel, 100, 210, player, key);
+            door = new Door (panel, 170, 200, player, key);
 
             villains = new Villain [2];
-             villains[0] = new Villain(850, 322, player, 2, 55, 410, 1);
+             villains[0] = new Villain(50, 195, player, 2, 45, 45, 1);
              villains[1] = new Villain(1420, 322, player, 3, 0, 100, 1);
            
 
             coins = new Coin[6];
-            coins[0] = new Coin(100, 200, player);
+            coins[0] = new Coin(10, 170, player);
             coins[1] = new Coin(110, 200, player);
             coins[2] = new Coin(140, 200, player);
             coins[3] = new Coin(180, 200, player);
@@ -146,9 +146,9 @@ public class TileMap {
             coins[5] = new Coin(220, 200, player);
 
             blades = new Blade[3];
-            blades[0] = new Blade(560, 225, 20, player,this);
-            blades[1] = new Blade(620, 225, 40, player,this);
-            blades[2] = new Blade(680, 225, 80, player,this);
+            blades[0] = new Blade(580, 225, 20, player,this);
+            blades[1] = new Blade(640, 225, 40, player,this);
+            blades[2] = new Blade(700, 225, 80, player,this);
             axe=new Axe(1060,30,player);
 
             panel.resetHearts();
@@ -504,12 +504,13 @@ public class TileMap {
 
     public void resetPlayer() {
 
-    
+        player.playerLiving();
         int x = (dimension.width / 2) + TILE_SIZE;
         int y = dimension.height - ((TILE_SIZE * NUM_TILES) + player.getHeight());
     
         player.setX(x);
         player.setY(y);
+        
     
         System.out.println("Player reset to start");
     }
@@ -533,9 +534,10 @@ public class TileMap {
     
             // If player still has lives → respawn
     if (!panel.isPlayerDead()) {
+        
 
         panel.respawnDelay(() -> {
-
+            player.playerLiving();
             resetPlayer();
             key.reset();
             door.reset();

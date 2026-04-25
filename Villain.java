@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
 
 public class Villain {
-    private JPanel panel;
+    private GamePanel panel;
 
    private int x;
    private int y;
@@ -44,7 +44,7 @@ public class Villain {
      private GridAnimation walkLeft;
      private GridAnimation walkRight;
 
-
+   
     int leftBoundary;
     int rightBoundary;
 
@@ -60,6 +60,7 @@ public class Villain {
      private int attackType;
 
     public Villain(int xPos, int yPos, Player player, int anum, int leftBound, int rightBound, int speed) {
+       
         x = xPos;
         y = yPos;
 
@@ -110,6 +111,8 @@ public class Villain {
         else{
             setAnimation("attack_right");
         }
+        // if(player.getInvincibility()) return;
+    
         player.harmfulCollision();
 
       } else {

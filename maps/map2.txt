@@ -9,17 +9,17 @@
 #   1       Bad Guy 1 (grub)
 #   2       Bad Guy 2 (fly)
 
-                               NNNNNNNN
+                              NNNNNNNN
 
                                                             
 
                                                   
-                ABBBBBBC      NNNNNN             UBC
-                D      TBBBC                    USETC
-              ABS                              USEEETC
-              DE                              USEEEEETC
-            ABSE                             USEEEEEEETC
-ABBBBBBBBBBBSEEREEEEOPPPPQ         ABBBBBBBBBSEEEEEEEEETC
-DREEEEREEREREEREEEEERJKLKLMR       DEEEREEEEREEEEEEEEEEBBBBBBBB
-DEEREEEREERERERRERREEEREEEEERRRRRRRSEEEEEEREEEEREEREEEREEEEEEEF
+                 ABBBBBBC      NNNNNN             UBC
+                 D      TBBBC                    USETC
+ABBC           ABS                              USEEETC
+DERF           DF                              USEEEEETC
+DERF         ABSF                             USEEEEEEETC
+DEETBBBBBBBBBSEETBBBBOPPPPQ          ABBBBBBBBSEEEEEEEEETC
+DREEEEREEREREEREEEEEEF       RR      DEEEREEEEREEEEEEEEEETBBBBC
+DEEREEEREEREREEERREEERJKLKLKLRRKLKLKLMSEEEEEEREEEEEEEREEEEEEEEF
 GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI
