@@ -36,6 +36,7 @@ public class Player {
    private boolean inAir;
    private boolean splashPlayed=false;
    private boolean deathAnimFinished=false;
+   private boolean invincible=false;
 
    private int initialVelocity;
    private int startAir;
@@ -542,13 +543,14 @@ public class Player {
                 y = tileTopY - getHeight();
                 
                 if (checkWaterCollision(tilePos)) {
+                    harmfulCollision();
                   if(!splashPlayed && !panel.isInvincible()){
                      soundManager.playSound("splash", false);
                      splashPlayed=true;
                   }
                   splashPlayed=false;
                
-                  harmfulCollision();
+                  
                   
                 }
                 
@@ -635,10 +637,12 @@ public class Player {
          BufferedImage frame = (BufferedImage) currentAnim.getAnimationImage();
 
          if (panel.isInvincible()){
+            //invincible=true;
             BufferedImage faded = applyFade(frame, 100); // increase alpha value for less transparency
             g2.drawImage(faded, x + offsetX, y, width, height, null);
          }
          else {
+            //invincible=false;
             g2.drawImage(frame, x + offsetX, y, width, height, null);
          }
    }
@@ -657,7 +661,7 @@ public class Player {
 
          System.out.println("Player stepped on water!");
 
-        // harmfulCollision();
+         harmfulCollision();
 
          return true;
       }
@@ -666,7 +670,9 @@ public class Player {
    }
 
    public void harmfulCollision() {
-      if (playerIsDead) return;   
+      if(panel.isInvincible()) return;
+
+      if (playerIsDead) return;   // so it does repeatedly trigger death if already dead
 
       playerIsDead = true;
       deathAnimFinished = false;
@@ -719,4 +725,8 @@ public class Player {
   
       return faded;
   }
+
+  public boolean getInvincibility() { 
+      return invincible;
+   }
 }
