@@ -523,7 +523,7 @@ public class Player {
                 y = tileTopY - getHeight();
                 
                 if (checkWaterCollision(tilePos)) {
-                  if(!splashPlayed){
+                  if(!splashPlayed && !panel.isInvincible()){
                      soundManager.playSound("splash", false);
                      splashPlayed=true;
                   }
