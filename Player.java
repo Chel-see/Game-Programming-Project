@@ -5,6 +5,8 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.awt.Image;
 
 public class Player {            
 
@@ -13,7 +15,8 @@ public class Player {
 
    private static final int TILE_SIZE = 32;
 
-   private JPanel panel;        // reference to the JFrame on which player is drawn
+   //private JPanel panel;        // reference to the JFrame on which player is drawn
+   private GamePanel panel;        // reference to the GamePanel on which player is drawn
    private TileMap tileMap;
    private BackgroundManager bgManager;
 
@@ -48,7 +51,7 @@ public class Player {
    private Stick stick;
    private SoundManager soundManager;
 
-   public Player (JPanel panel, TileMap t, BackgroundManager b) {
+   public Player (GamePanel panel, TileMap t, BackgroundManager b) {
       this.panel = panel;
 
       tileMap = t;            // tile map on which the player's sprite is displayed
@@ -520,7 +523,7 @@ public class Player {
                 y = tileTopY - getHeight();
                 
                 if (checkWaterCollision(tilePos)) {
-                  if(!splashPlayed){
+                  if(!splashPlayed && !panel.isInvincible()){
                      soundManager.playSound("splash", false);
                      splashPlayed=true;
                   }
@@ -601,7 +604,17 @@ public class Player {
    // }
 
    public void draw(Graphics2D g2, int offsetX) {
-         currentAnim.draw(g2,x+offsetX,y,width,height);
+         //currentAnim.draw(g2,x+offsetX,y,width,height);
+
+         BufferedImage frame = (BufferedImage) currentAnim.getAnimationImage();
+
+         if (panel.isInvincible()){
+            BufferedImage faded = applyFade(frame, 100); // increase alpha value for less transparency
+            g2.drawImage(faded, x + offsetX, y, width, height, null);
+         }
+         else {
+            g2.drawImage(frame, x + offsetX, y, width, height, null);
+         }
    }
 
    public Rectangle2D.Double getBounds() {
@@ -634,5 +647,35 @@ public class Player {
    //    tileMap.handlePlayerDeath();
    // }
 
+   private BufferedImage applyFade(BufferedImage img, int alpha) {
 
+      int w = img.getWidth(null);
+      int h = img.getHeight(null);
+  
+      BufferedImage buffered = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+      Graphics2D g = buffered.createGraphics();
+      g.drawImage(img, 0, 0, null);
+      g.dispose();
+  
+      int[] pixels = new int[w * h];
+      buffered.getRGB(0, 0, w, h, pixels, 0, w);
+  
+      for (int i = 0; i < pixels.length; i++) {
+  
+         int a = (pixels[i] >> 24) & 255;
+
+         if (a != 0) {
+            int red = (pixels[i] >> 16) & 255;
+            int green = (pixels[i] >> 8) & 255;
+            int blue = pixels[i] & 255;
+
+            pixels[i] = (alpha << 24) | (red << 16) | (green << 8) | blue;
+         }
+      }
+  
+      BufferedImage faded = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+      faded.setRGB(0, 0, w, h, pixels, 0, w);
+  
+      return faded;
+  }
 }
