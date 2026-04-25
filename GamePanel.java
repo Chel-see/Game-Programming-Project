@@ -589,8 +589,8 @@ public class GamePanel extends JPanel
 
                 invincible = true;
                 invincibleTimer = INVINCIBLE_DURATION;
-                System.out.println("Hazard immunity for 5 seconds!");
-                showBanner("Hazard immunity for 5 seconds!");
+                System.out.println("Hazard immunity for " + (INVINCIBLE_DURATION / 20) + " seconds!");
+                showBanner("Hazard immunity for " + (INVINCIBLE_DURATION / 20) + " seconds!");
             }
         }
     }
