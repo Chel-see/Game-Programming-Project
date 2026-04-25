@@ -36,7 +36,7 @@ public class Player {
    private boolean inAir;
    private boolean splashPlayed=false;
    private boolean deathAnimFinished=false;
-   private boolean invincible=false;
+ 
 
    private int initialVelocity;
    private int startAir;
@@ -446,6 +446,41 @@ public class Player {
      }
 
 
+
+
+private void checkStandingOnWater() {
+
+    if (panel.isInvincible() || playerIsDead) return;
+
+    int offsetY = tileMap.getOffsetY();
+
+    int leftTile = tileMap.pixelsToTiles(x);
+    int rightTile = tileMap.pixelsToTiles(x + width - 1);
+    int yTile = tileMap.pixelsToTiles(y - offsetY + height);
+
+    boolean onWater =
+        tileMap.isWaterTile(leftTile, yTile) ||
+        tileMap.isWaterTile(rightTile, yTile);
+
+    if (onWater) {
+
+        if (!splashPlayed) {
+            soundManager.playSound("splash", false);
+            splashPlayed = true;
+        }
+
+        harmfulCollision();
+
+    } else {
+        splashPlayed = false;
+    }
+}
+
+
+
+
+
+
    private void fall() {
 
       jumping = false;
@@ -493,6 +528,7 @@ public class Player {
 
         return; 
       }
+      checkStandingOnWater();
 
       int distance = 0;
       int newY = 0;
@@ -543,17 +579,15 @@ public class Player {
                 y = tileTopY - getHeight();
                 
                 if (checkWaterCollision(tilePos)) {
-                    harmfulCollision();
-                  if(!splashPlayed && !panel.isInvincible()){
-                     soundManager.playSound("splash", false);
-                     splashPlayed=true;
-                  }
-                  splashPlayed=false;
-               
-                  
-                  
+                  if(!panel.isInvincible()){
+                     if(!splashPlayed ){
+                        soundManager.playSound("splash", false);
+                        splashPlayed=true;
+                     }
+                     harmfulCollision();
+                  }  
                 }
-                
+                splashPlayed=false;
                 System.out.println("Jumping: Collision Going Down!");
                 goingDown = false;
                 jumping = false;
@@ -661,7 +695,6 @@ public class Player {
 
          System.out.println("Player stepped on water!");
 
-         harmfulCollision();
 
          return true;
       }
@@ -726,7 +759,4 @@ public class Player {
       return faded;
   }
 
-  public boolean getInvincibility() { 
-      return invincible;
-   }
 }
