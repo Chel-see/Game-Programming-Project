@@ -88,6 +88,11 @@ public class GamePanel extends JPanel
 
     private Rectangle2D.Double restartBounds;
 
+    private boolean invincible = false;
+    private int invincibleTimer = 0;
+
+    private final int INVINCIBLE_DURATION = 200; // ~10 seconds at 20 FPS
+
     public GamePanel () {
 
         isRunning = false;
@@ -186,6 +191,13 @@ public class GamePanel extends JPanel
                 return;
             }
         } */
+
+        if (invincible){
+            invincibleTimer--;
+            if (invincibleTimer <= 0){
+                invincible = false;
+            }
+        }
 
         if (showBanner) {
             bannerTimer--;
@@ -568,10 +580,20 @@ public class GamePanel extends JPanel
     public void collectCoin() {
         this.coinCount++;
 
-        if (coinCount % 5 == 0) { // every 5 coins, gain an extra life
-            hearts.extraLife();
-            System.out.println("Extra life gained!");
-            showBanner("+1 Life!");
+        if (level == 1){
+            if (coinCount % 5 == 0) { // every 5 coins, gain an extra life
+                hearts.extraLife();
+                System.out.println("Extra life gained!");
+                showBanner("+1 Life!");
+            }
+        } else if (level == 2){
+            if (coinCount % 5 == 0) { // every 5 coins, immune for 5 seconds
+
+                invincible = true;
+                invincibleTimer = INVINCIBLE_DURATION;
+                System.out.println("Hazard immunity for " + (INVINCIBLE_DURATION / 20) + " seconds!");
+                showBanner("Hazard immunity for " + (INVINCIBLE_DURATION / 20) + " seconds!");
+            }
         }
     }
 
@@ -680,5 +702,9 @@ public class GamePanel extends JPanel
         gameThread.start();
     
         showBanner("Level 1");
+    }
+
+    public boolean isInvincible() {
+        return invincible;
     }
 }

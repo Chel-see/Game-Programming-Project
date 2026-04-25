@@ -141,10 +141,9 @@ public class TileMap {
             coins[0] = new Coin(10, 170, player);
             coins[1] = new Coin(110, 200, player);
             coins[2] = new Coin(140, 200, player);
-
-            coins[3] = new Coin(600, 120, player);
-            coins[4] = new Coin(120, 70, player);
-            coins[5] = new Coin(140, 70, player);
+            coins[3] = new Coin(180, 200, player);
+            coins[4] = new Coin(200, 200, player);
+            coins[5] = new Coin(220, 200, player);
 
             blades = new Blade[3];
             blades[0] = new Blade(580, 225, 20, player,this);
@@ -521,6 +520,11 @@ public class TileMap {
     }
 
     public void handlePlayerDeath() {
+
+        if (panel.isInvincible()) {
+            System.out.println("Player is invincible, no life lost.");
+            return;
+        }
 
         if (resetting) return;
     
