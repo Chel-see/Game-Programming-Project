@@ -461,11 +461,13 @@ public class GamePanel extends JPanel
     public void pauseGame() {                // pause the game (don't update game entities)
         if (isRunning) {
             if (isPaused){
+                 soundManager.playSound("background",true);
                 isPaused = false;
                 gameTimer.start(); // resume timer when unpausing
             }
             else{
                 isPaused = true;
+                soundManager.stopSound("background");
                 gameTimer.pause(); // pause timer when pausing
             }
 

@@ -57,14 +57,16 @@ public class Blade {
   }
 
   public Rectangle2D.Double getBoundingRectangle() {
-        return new Rectangle2D.Double(x+10, y+10, WIDTH-10, HEIGHT-10);
+        return new Rectangle2D.Double(x+5, y+5, WIDTH-10, HEIGHT-10);
     }
+
+
 
      public boolean collidesWithPlayer() {
         Rectangle2D.Double myRect = getBoundingRectangle();
         Rectangle2D.Double playerRect = player.getBounds();
 
-        return myRect.intersects(playerRect);
+        return myRect.intersects(playerRect); 
     }
 
 
@@ -90,7 +92,9 @@ public class Blade {
 
             g2d.drawImage(img, 0, 0, null);    // copy in the image
 
+
             g2.drawImage(dest, x + offsetX, y+ tileMap.getOffsetY(), WIDTH, HEIGHT, null);
+           
 
            g2d.dispose();
         }

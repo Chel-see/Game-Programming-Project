@@ -28,9 +28,11 @@ public class Player {
 
    private boolean goingUp;
    private boolean goingDown;
+   private boolean playerIsDead=false;
 
    private boolean inAir;
    private boolean splashPlayed=false;
+   private boolean deathAnimFinished=false;
 
    private int initialVelocity;
    private int startAir;
@@ -40,7 +42,7 @@ public class Player {
    private GridAnimation idle;
    private GridAnimation walkRight;
    private GridAnimation walkLeft;
-  // private GridAnimation death;
+   private GridAnimation death;
   // private GridAnimation jump;
 
    private GridAnimation currentAnim;
@@ -63,7 +65,7 @@ public class Player {
       idle = new GridAnimation("Warrior/Idle.png", 1, 6, true);
       walkRight= new GridAnimation("Warrior/WalkRight.png", 1, 8, true);
       walkLeft= new GridAnimation("Warrior/WalkLeft.png", 1, 8, true);
-      //death = new GridAnimation("Warrior/Dead.png", 1, 4, false);
+      death = new GridAnimation("Warrior/Dead.png", 1, 4, false);
 
      // jump = new GridAnimation("Warrior/Jump.png", 1, 5, true);
       
@@ -94,9 +96,9 @@ public class Player {
       //   else if(name.equals("jump")){
       //       newAnim = jump;
       //   }
-      //   else if(name.equals("death")){
-      //       newAnim = death;
-      //   }
+        else if(name.equals("death")){
+            newAnim = death;
+        }
 
         if(currentAnim!= newAnim){
             currentAnim=newAnim;
@@ -274,6 +276,7 @@ public class Player {
 
 
    public synchronized void move (int direction) {
+      if (playerIsDead) return;  // stops all movement 
 
       int newX = x;
       Point tilePos = null;
@@ -346,8 +349,12 @@ public class Player {
           jump();
       return;
       }
+
       else if (direction == 0) {
-          setAnimation("idle");
+         if(!playerIsDead){
+           setAnimation("idle");
+         }
+          
       }
     
       if (tilePos != null) {  
@@ -471,6 +478,18 @@ public class Player {
    public void update () {
       currentAnim.update();
 
+
+      if (playerIsDead) {
+
+        // wait until death animation finishes
+        if (!currentAnim.isStillActive() && !deathAnimFinished) {
+            tileMap.handlePlayerDeath();
+            deathAnimFinished = true;
+        }
+
+        return; 
+      }
+
       int distance = 0;
       int newY = 0;
 
@@ -525,7 +544,9 @@ public class Player {
                      splashPlayed=true;
                   }
                   splashPlayed=false;
-                    return;
+               
+                  harmfulCollision();
+                  
                 }
                 
                 System.out.println("Jumping: Collision Going Down!");
@@ -601,6 +622,10 @@ public class Player {
    // }
 
    public void draw(Graphics2D g2, int offsetX) {
+      if (playerIsDead && !currentAnim.isStillActive()) {
+        g2.drawImage(currentAnim.getAnimationImage(), x+offsetX, y, width, height, null);
+        return;
+      }
          currentAnim.draw(g2,x+offsetX,y,width,height);
    }
 
@@ -618,7 +643,7 @@ public class Player {
 
          System.out.println("Player stepped on water!");
 
-         tileMap.handlePlayerDeath();
+        // harmfulCollision();
 
          return true;
       }
@@ -627,12 +652,27 @@ public class Player {
    }
 
    public void harmfulCollision() {
-      tileMap.handlePlayerDeath();
+      if (playerIsDead) return;   
+
+      playerIsDead = true;
+      deathAnimFinished = false;
+
+      setAnimation("death");     
+      
    }
 
-   // public void bladeCollision() {
-   //    tileMap.handlePlayerDeath();
-   // }
+   public void playerDied() {
+      playerIsDead = true;
+   }
+
+   public void playerLiving(){
+      playerIsDead=false;
+      deathAnimFinished = false;
+      splashPlayed = false;
+
+    setAnimation("idle"); // reset animation
+   }
+   
 
 
 }

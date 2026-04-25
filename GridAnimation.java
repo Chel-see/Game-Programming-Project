@@ -17,12 +17,14 @@ public class GridAnimation {
     private int width;
     private int height;
 
+   
     private int dx;        // increment to move along x-axis
     private int dy;        // increment to move along y-axis
 
     public GridAnimation(String file , int row , int col , boolean loop) {
 
         animation = new Animation(loop);    // run animation once
+
 
             dx = 0;        // increment to move along x-axis
             dy = 0;    // increment to move along y-axis
@@ -78,8 +80,14 @@ public class GridAnimation {
 
         g2.drawImage(animation.getImage(), x, y,w,h, null);
     }
+
+
       public synchronized Image getAnimationImage(){
         return animation.getImage();
+    }
+
+    public boolean isStillActive() {
+        return animation.isStillActive();
     }
     
 }
