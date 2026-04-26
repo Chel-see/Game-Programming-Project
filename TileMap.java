@@ -125,7 +125,7 @@ public class TileMap {
         if (panel.getLevel() == 2) {
             NUM_TILES=4;
 
-            this.stick = new Stick(panel, 100, 100, this); // choose position
+            this.stick = new Stick(panel, 1200, 250, this); // choose position
 
             player = new Player (panel, this, bgManager);
             key = new Key (panel, 550, 270 ,  player);
@@ -146,9 +146,10 @@ public class TileMap {
             coins[5] = new Coin(220, 200, player);
 
             blades = new Blade[3];
-            blades[0] = new Blade(580, 225, 20, player,this);
-            blades[1] = new Blade(640, 225, 40, player,this);
-            blades[2] = new Blade(700, 225, 80, player,this);
+            blades[0] = new Blade(600, 225, 100, player,this);
+            blades[1] = new Blade(700, 225, 40, player,this);
+            blades[2] = new Blade(1257, 62 , 20, player,this);
+            
             axe=new Axe(1060,30,player);
 
             panel.resetHearts();
@@ -438,6 +439,10 @@ public class TileMap {
         player.update();
         key.update();
         door.update();
+
+        if(stick != null){
+            stick.update();
+        }
 
         if(blades != null){
             for(int i=0; i< blades.length; i++){
