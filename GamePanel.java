@@ -700,6 +700,8 @@ public class GamePanel extends JPanel
         isRunning = true;
         gameThread = new Thread(this);
         gameThread.start();
+        soundManager.playSound ("background", true);
+
     
         showBanner("Level 1");
     }
