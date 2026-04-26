@@ -82,7 +82,7 @@ public class TileMap {
 
             NUM_TILES=3;
 
-            this.stick = new Stick(panel, 730, 65, this); // choose position
+            this.stick = new Stick(panel, 730, 66, this); // choose position
 
             player = new Player (panel, this, bgManager);
 
@@ -125,7 +125,7 @@ public class TileMap {
         if (panel.getLevel() == 2) {
             NUM_TILES=4;
 
-            this.stick = new Stick(panel, 1200, 250, this); // choose position
+            this.stick = new Stick(panel, 1200, 251, this); // choose position
 
             player = new Player (panel, this, bgManager);
             key = new Key (panel, 550, 270 ,  player);

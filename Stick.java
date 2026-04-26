@@ -7,7 +7,8 @@ import java.awt.Point;
 public class Stick {
 
     private static final int WIDTH = 170;   // adjust as needed
-    private static final int HEIGHT = 32;
+    //private static final int HEIGHT = 32;
+    private static final int HEIGHT = 31;
     private boolean inAir = false;
     private int fallSpeed = 0;
     private static final int GRAVITY = 2;
