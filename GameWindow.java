@@ -162,6 +162,13 @@ public class GameWindow extends JFrame
         // set status bar message
 
         statusBarTF.setText("Application started.");
+
+        //gamePanel.gameRender();
+        new javax.swing.Timer(100, e -> {
+            gamePanel.gameRender();
+            ((javax.swing.Timer)e.getSource()).stop();
+        }).start();
+        System.out.println("Intro rendered.");
     }
 
 

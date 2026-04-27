@@ -93,6 +93,12 @@ public class GamePanel extends JPanel
 
     private final int INVINCIBLE_DURATION = 200; // ~10 seconds at 20 FPS
 
+    private boolean successfulCompletion = false;
+    private boolean endFlag = false;
+
+    private boolean gameStarted = false;
+    private Image introImage;
+
     public GamePanel () {
 
         isRunning = false;
@@ -110,10 +116,12 @@ public class GamePanel extends JPanel
 
         soundManager.setVolume("background", 0.85f);
         gameFont = loadFont("fonts/Not Jam Third Dimension 15.ttf");
-        bannerFont = loadFont("fonts/Not Jam Mono Clean 13");
+        bannerFont = loadFont("fonts/NotJamSlab14.ttf");
 
         restartNormal = ImageManager.loadImage("UI/restart_unpressed.png");
         restartPressed = ImageManager.loadImage("UI/restart_pressed.png");
+
+        introImage = ImageManager.loadImage("UI/intro.png");
     }
 
 
@@ -165,7 +173,11 @@ public class GamePanel extends JPanel
                   
                     return;
                 }
-                showBanner("Level " + level);
+                if (level != 3){
+                    showBanner("Level " + level);
+                } else {
+                    showBanner("Bob is saved!");
+                }
             }
 
             if (transitionTimer <= 0) {
@@ -227,6 +239,16 @@ public class GamePanel extends JPanel
 
         // draw the game objects on the image
         Graphics2D imageContext = (Graphics2D) image.getGraphics();
+
+        if (!gameStarted) {
+            imageContext.drawImage(introImage, 0, 0, 600, 500, null);
+
+            Graphics2D g2 = (Graphics2D) getGraphics();
+            g2.drawImage(image, 0, 0, 600, 500, null);
+
+            imageContext.dispose();
+            return;
+        }
 
         tileMap.draw(imageContext);
 
@@ -291,13 +313,15 @@ public class GamePanel extends JPanel
                 imageContext.setFont(gameFont.deriveFont(fontSize));
                 imageContext.setColor(java.awt.Color.WHITE);
 
-                String text = "Level " + "1" + " Complete!";
+                if (level != 3){
+                    String text = "Level " + "1" + " Complete!";
 
-                java.awt.FontMetrics fm = imageContext.getFontMetrics();
-                int x = (getWidth() - fm.stringWidth(text)) / 2;
-                int y = getHeight() / 2;
+                    java.awt.FontMetrics fm = imageContext.getFontMetrics();
+                    int x = (getWidth() - fm.stringWidth(text)) / 2;
+                    int y = getHeight() / 2;
 
-                imageContext.drawString(text, x, y);
+                    imageContext.drawString(text, x, y);
+                }
             }
         }
 
@@ -386,6 +410,56 @@ public class GamePanel extends JPanel
             imageContext.drawImage(btnImage, btnX, btnY, btnWidth, btnHeight, null);
         }
 
+        if (endFlag) {
+            // draw game over screen
+            imageContext.setColor(new java.awt.Color(0, 0, 0, 200));
+            imageContext.fillRect(0, 0, getWidth(), getHeight());
+
+            String gameOverText = "YOU WON!";
+            String timeText = "Final Time: " + gameTimer.formatTime(finalTime);
+
+            float fontSize = getHeight() * 0.15f;
+            imageContext.setFont(gameFont.deriveFont(fontSize));
+            imageContext.setColor(java.awt.Color.GREEN);
+
+            FontMetrics fm = imageContext.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(gameOverText)) / 2;
+            int y = getHeight() / 2 - 20;
+
+            imageContext.drawString(gameOverText, x, y);
+
+            imageContext.setFont(gameFont.deriveFont(20f));
+            fm = imageContext.getFontMetrics();
+            x = (getWidth() - fm.stringWidth(timeText)) / 2;
+            y += 40;
+
+            imageContext.setFont(bannerFont.deriveFont(20f));
+            FontMetrics fm2 = imageContext.getFontMetrics();
+            int x2 = (getWidth() - fm2.stringWidth(timeText)) / 2;
+            imageContext.setColor(java.awt.Color.WHITE);
+            imageContext.drawString(timeText, x2, y);
+
+            int btnWidth = 120;
+            int btnHeight = 50;
+
+            int btnX = (getWidth() - btnWidth) / 2;
+            int btnY = getHeight() / 2 + 40;
+
+            restartBounds = new Rectangle2D.Double(btnX, btnY, btnWidth, btnHeight);
+
+            Image btnImage;
+
+            if (restartDown) {
+                btnImage = restartPressed;
+            } else if (restartHover) {
+                btnImage = restartPressed;
+            } else {
+                btnImage = restartNormal;
+            }
+
+            imageContext.drawImage(btnImage, btnX, btnY, btnWidth, btnHeight, null);
+        }
+
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.drawImage(image, 0, 0, 600, 500, null);
 
@@ -394,7 +468,9 @@ public class GamePanel extends JPanel
     }
 
 
-    public void startGame() {                // initialise and start the game thread 
+    public void startGame() {                // initialise and start the game thread
+
+        gameStarted = true;
 
         if (gameThread == null) {
             soundManager.playSound ("background", true);
@@ -462,8 +538,13 @@ public class GamePanel extends JPanel
         // }
 
             if (gameThread != null) {   // remove this after testing phase
-                this.level = 2;
-                levelChange = true;
+                if (level == 1){
+                    level = 2;
+                    levelChange = true;
+                } else if (level == 2){
+                    level = 3;
+                    levelChange = true;
+                }
             }
 
 
@@ -528,6 +609,8 @@ public class GamePanel extends JPanel
     }
 
     private void processInput() {
+        if (level == 3) return;
+
         if (leftPressed) {
             tileMap.moveLeft();
         }
@@ -656,7 +739,7 @@ public class GamePanel extends JPanel
     }
 
     public void handleMousePress(MouseEvent e) {
-        if (gameOverFlag && restartBounds != null) {
+        if ((gameOverFlag || endFlag) && restartBounds != null) {
             if (restartBounds.contains(e.getPoint())) {
                 restartDown = true;
                 gameRender();
@@ -665,7 +748,7 @@ public class GamePanel extends JPanel
     }
     
     public void handleMouseRelease(MouseEvent e) {
-        if (gameOverFlag && restartBounds != null) {
+        if ((gameOverFlag || endFlag) && restartBounds != null) {
             if (restartDown && restartBounds.contains(e.getPoint())) {
                 restartGame();
             }
@@ -681,6 +764,12 @@ public class GamePanel extends JPanel
         coinCount = 0;
         gameOver = false;
         gameOverFlag = false;
+        endFlag = false;
+        successfulCompletion = false;
+
+        restartBounds = null;
+        restartHover = false;
+        restartDown = false;
     
         resetHearts();
     
@@ -708,5 +797,20 @@ public class GamePanel extends JPanel
 
     public boolean isInvincible() {
         return invincible;
+    }
+
+    public void success(boolean success) {
+        this.successfulCompletion = success;
+        gameTimer.pause();
+        finalTime = gameTimer.getTime();
+        //isRunning = false;
+        //gameOverFlag = true;
+        //gameRender();
+    }
+
+    public void end(){
+            isRunning = false;
+            endFlag = true;
+            gameRender();
     }
 }
