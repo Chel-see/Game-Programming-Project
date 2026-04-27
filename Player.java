@@ -33,6 +33,8 @@ public class Player {
    private boolean goingDown;
    private boolean playerIsDead=false;
 
+   private boolean landedOnStick=false;
+
    private boolean inAir;
    private boolean splashPlayed=false;
    private boolean deathAnimFinished=false;
@@ -111,23 +113,6 @@ public class Player {
 
     }
 
-
-   // public Point collidesWithTile(int newX, int newY) {
-
-            // int playerWidth = playerImage.getWidth(null);
-            // int offsetY = tileMap.getOffsetY();
-      // int xTile = tileMap.pixelsToTiles(newX);
-      // int yTile = tileMap.pixelsToTiles(newY - offsetY);
-    
-
-      // if (tileMap.getTile(xTile, yTile) != null) {
-            // Point tilePos = new Point (xTile, yTile);
-          // return tilePos;
-      // }
-      // else {
-        // return null;
-      // }
-   // }
    public Point collidesWithTile(int newX, int newY) {  //cater for left and right collisions mainly 
 
      
@@ -144,37 +129,12 @@ public class Player {
             return new Point(xTile, yTile);
         }
     }
-        return null;
+        return null; 
       
    }
 
 
-/*    public Point collidesWithTileDown (int newX, int newY) {
 
-            int offsetY = tileMap.getOffsetY();
-            
-      int xTile = tileMap.pixelsToTiles(newX);
-      int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
-      int yTileTo = tileMap.pixelsToTiles(newY - offsetY + height);
-
-      for (int yTile=yTileFrom; yTile<=yTileTo; yTile++) {
-        if (tileMap.getTile(xTile, yTile) != null) {
-                Point tilePos = new Point (xTile, yTile);
-              return tilePos;
-          }
-        else {
-            if (tileMap.getTile(xTile+1, yTile) != null) {
-                int leftSide = (xTile + 1) * TILE_SIZE;
-                if (newX + width > leftSide) {
-                    Point tilePos = new Point (xTile+1, yTile);
-                    return tilePos;
-                    }
-            }
-        }
-      }
-
-      return null;
-   } */
 
       public Point collidesWithTileDown (int newX, int newY) {
 
@@ -248,35 +208,7 @@ public class Player {
       return null;
    }
  
-/*
 
-   public Point collidesWithTile(int newX, int newY) {
-
-     int playerWidth = playerImage.getWidth(null);
-     int playerHeight = playerImage.getHeight(null);
-
-           int fromX = Math.min (x, newX);
-     int fromY = Math.min (y, newY);
-     int toX = Math.max (x, newX);
-     int toY = Math.max (y, newY);
-
-     int fromTileX = tileMap.pixelsToTiles (fromX);
-     int fromTileY = tileMap.pixelsToTiles (fromY);
-     int toTileX = tileMap.pixelsToTiles (toX + playerWidth - 1);
-     int toTileY = tileMap.pixelsToTiles (toY + playerHeight - 1);
-
-     for (int x=fromTileX; x<=toTileX; x++) {
-        for (int y=fromTileY; y<=toTileY; y++) {
-            if (tileMap.getTile(x, y) != null) {
-                Point tilePos = new Point (x, y);
-                return tilePos;
-            }
-        }
-     }
-    
-     return null;
-   }
-*/
 
 
    public synchronized void move (int direction) {
@@ -358,6 +290,7 @@ public class Player {
          if(!playerIsDead){
            setAnimation("idle");
          }
+
           
       }
     
@@ -374,12 +307,12 @@ public class Player {
          }
      }
       else {
-          if (direction == 1) {
+          if (direction == 1 ) {
           x = newX;
           bgManager.moveLeft();
           }
       else
-      if (direction == 2) {
+      if (direction == 2 ) {
           x = newX;
           bgManager.moveRight();
          }
@@ -387,41 +320,14 @@ public class Player {
           if (isInAir()) {
           System.out.println("In the air. Starting to fall.");
 
-         //this caused the error falling preventing falling to the left. i belive we can remove it
-         //  if (direction == 1) {                // make adjustment for falling on left side of tile
-                
-         //  x = x - width + DX;
-         //  }
+       
           fall();
           }
       }
    }
 
 
-/*    public boolean isInAir() {  // no longer uses collideswithTile, checks feet directly
 
-     
-
-      Point tilePos;
-
-      if (!jumping && !inAir) {   
-        
-          int offsetY = tileMap.getOffsetY();
-          int leftTile  = tileMap.pixelsToTiles(x);
-         int rightTile = tileMap.pixelsToTiles(x + width - 1);
-
-        int yTile = tileMap.pixelsToTiles(y - offsetY + height + 1);
-
-        // ONLY check directly below both feet
-        if (tileMap.getTile(leftTile, yTile) == null &&
-            tileMap.getTile(rightTile, yTile) == null) {
-            return true;
-        } 
-    }
-        
-
-      return false;
-   } */
 
       public boolean isInAir() {
          if (!jumping && !inAir) {   
@@ -595,7 +501,7 @@ private void checkStandingOnWater() {
             }
             else {
                 // Check for crate landing (since collidesWithTileDown returned null for crates)
-                boolean landedOnStick = false;
+                landedOnStick = false;
                 
                Rectangle2D.Double futureBounds = new Rectangle2D.Double(x, newY, getWidth(), getHeight());
                         
@@ -642,6 +548,9 @@ private void checkStandingOnWater() {
    public int getY() {
       return y;
    }
+
+   
+
    public int getHeight() {
       return this.height;
    }
@@ -758,5 +667,50 @@ private void checkStandingOnWater() {
   
       return faded;
   }
+
+
+  public boolean landedOnStick() {
+      return this.landedOnStick;
+  }
+
+
+  public void moveWithStick(int dx) {
+   if (!landedOnStick) return;
+      int newX = x + dx;
+
+    Point tilePos;
+
+    if (dx > 0) {
+        tilePos = collidesWithTile(newX + width, y); // right side
+        if (tilePos != null) {
+            // snap to left side of tile
+            x = ((int) tilePos.getX()) * TILE_SIZE - width;
+            return;
+        }
+    } else {
+        tilePos = collidesWithTile(newX, y); // left side
+        if (tilePos != null) {
+            // snap to right side of tile
+            x = ((int) tilePos.getX() + 1) * TILE_SIZE;
+            return;
+        }
+    }
+
+    // no collision → move freely
+    x = newX;
+   }
+
+
+
+public boolean isOffMap(){
+  
+    int mapHeightPixels = tileMap.getHeight() * TILE_SIZE;
+    return this.y  >= mapHeightPixels;
+
+ 
+}
+
+
+
 
 }
