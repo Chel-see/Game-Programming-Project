@@ -134,20 +134,19 @@ public class TileMap {
             player = new Player (panel, this, bgManager);
             key = new Key (panel, 550, 270 ,  player);
             
-            door = new Door (panel, 170, 200, player, key);
+            door = new Door (panel, 3800, 14, player, key);
 
             villains = new Villain [2];
-             villains[0] = new Villain(50, 195, player, 2, 45, 45, 1);
-             villains[1] = new Villain(1420, 322, player, 3, 0, 100, 1);
+             villains[0] = new Villain(2304, 355, player, 2, 0, 180, 2);
+             villains[1] = new Villain(3500, 322, player, 3, 120, 100, 6);
            
 
-            coins = new Coin[6];
-            coins[0] = new Coin(10, 170, player);
-            coins[1] = new Coin(110, 200, player);
-            coins[2] = new Coin(140, 200, player);
-            coins[3] = new Coin(180, 200, player);
-            coins[4] = new Coin(200, 200, player);
-            coins[5] = new Coin(220, 200, player);
+            coins = new Coin[5];
+            coins[0] = new Coin(84, 188, player);
+            coins[1] = new Coin(824, 285, player);
+            coins[2] = new Coin(1685, 125, player);
+            coins[3] = new Coin(2080, 155, player);
+            coins[4] = new Coin(2730, 182, player);
 
             blades = new Blade[2];
             blades[0] = new Blade(600, 225, 100, player,this);

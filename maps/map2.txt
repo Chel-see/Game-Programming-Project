@@ -10,16 +10,15 @@
 #   2       Bad Guy 2 (fly)
 
                       
-
+                                                 
+                                                                                                                     OPQO
                                                             
-                        
-                                                  
-                 ABBBBBBC                                                              AC
-                 D      TBBC            ABBC    N    NN         ABBC                                 AC  ASTC
-ABBC           ABS                      DEEF                    DEEF                       ASTJKSEETC
-DEEF           DF                       DEEF                    DEEF                  ABBJKSEEEEEEEETC
-DEEF         ABSF                    AOQSEEF                    DEEF              ABJMSEEEEEEEEEEEEEETC
-DEETBBBBBBBBBSEETBBBBOPPPPPQ         DJMREEF                    DEEF            ABBSEEEEEEEEEEEEEEEEEEETC
-DREEEEREEREREEREEEEEE        RRBBBBBBSEEEEEF                    DEETCBBBBB      DEEEREEEEREEEEEEEEEEEEEEEEEEEEETBBBC
-DEEREEEREEREREEERREEERJKLKLKLRREEEREEEEEEEEF                    DEEFEEERREEEEEEREEEEEEEREEEEEEEEEEEEEEEEEEEF
-GHHHHHHHHHHHHHHHHHHHHHHHHHHHHRREEEEEEEEEEEEF                    DEEEEEERRHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHI
+                 ABBBBBBC                           NN    N                                                       O
+                 D      TBBC            ABBC   N    NN   N N    ABBC                                                     
+ABBC           ABS                      DEEF                    DEEF                       ABBBBBBBBC
+DEEF           DF                       DEEF                    DEETBC                ABC  DEEEEEEEETC        NN  
+DEEF         ABSF                    AOQSEEF                    DEEEEF            AC  DETJKSEEEEEEEEETC
+DEETBBBBBBBBBSEETBBBBOPPPPPQ         DJMREEF                    DEEEEF          ABSTJMSEEEEEEEEEEEEEEETC
+DREEEEREEREREEREEEEEE        RRBBBBBBSEEEEEF                    DEEEETBC        DEEEREEEEREEEEEEEEEEEEETBBBBBBBBBBC
+DEEREEEREEREREEERREEERJKLKLKLRREEEREEEEEEEEF                    DEEEERRTBBBBBBBBSEEEEEEREEEEEEEEEEEEEEEEEEEEEEEEEETJKLKLM
+GHHHHHHHHHHHHHHHHHHHHHHHHHHHHRREEEEEEEEEEEEF                    DEEEERREEHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
