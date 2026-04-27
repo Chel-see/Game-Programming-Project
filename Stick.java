@@ -7,28 +7,41 @@ import java.awt.Point;
 public class Stick {
 
     private static final int WIDTH = 170;   // adjust as needed
-    //private static final int HEIGHT = 32;
+    
     private static final int HEIGHT = 31;
     private boolean inAir = false;
+    private boolean moving=false;
+
+    private boolean playerWasOn = false;
+
     private int fallSpeed = 0;
     private static final int GRAVITY = 2;
     private static final int MAX_FALL_SPEED = 12;
 
-    private int x, y;
+    private int x, y,dx;
     private int startX, startY;
     private Image image;
     private TileMap tileMap;
-    private JPanel panel;
+    private GamePanel panel;
 
-    public Stick(JPanel panel, int x, int y, TileMap tileMap) {
+    private String position =null; 
+
+    public Stick(GamePanel panel, int x, int y, TileMap tileMap) {
         this.panel = panel;
         this.x = x;
         this.y = y;
+
+        this.dx = 3;
+
         this.startX = x;
         this.startY = y;
         this.tileMap = tileMap;
 
         image = ImageManager.loadImage("wooden-stick.png");
+
+        if(panel.getLevel()==2){
+            position="left";
+        }
     }
 
     public void draw(Graphics2D g2, int offsetX) {
@@ -42,40 +55,9 @@ public class Stick {
     public int getX() { return x; }
     public int getY() { return y; }
 
+   
 
-private Point collidesWithTileDown(int newY) {
-
-    int offsetY = tileMap.getOffsetY();
-
-    int leftTile = TileMap.pixelsToTiles(x);
-    int rightTile = TileMap.pixelsToTiles(x + WIDTH - 1);
-
-    int yTile = TileMap.pixelsToTiles(newY - offsetY + HEIGHT);
-
-    // check both feet
-    if (tileMap.getTile(leftTile, yTile) != null) {
-        return new Point(leftTile, yTile);
-    }
-
-    if (tileMap.getTile(rightTile, yTile) != null) {
-        return new Point(rightTile, yTile);
-    }
-
-    return null;
-}
-
-private boolean isInAir() {
-
-    int offsetY = tileMap.getOffsetY();
-
-    int leftTile = TileMap.pixelsToTiles(x);
-    int rightTile = TileMap.pixelsToTiles(x + WIDTH - 1);
-    int yTile = TileMap.pixelsToTiles(y - offsetY + HEIGHT + 1);
-
-    return (tileMap.getTile(leftTile, yTile) == null &&
-            tileMap.getTile(rightTile, yTile) == null);
-}
-
+    
 
     public boolean move(int dx) {
         int newX = x + dx;
@@ -107,44 +89,102 @@ private boolean isInAir() {
     }
 
 
-public void update() {
 
-    if (isInAir()) {
-        inAir = true;
+
+
+    public boolean collidesRight() {
+    int newX = x + dx;
+    int offsetY = tileMap.getOffsetY();
+
+    int checkX = newX + WIDTH; // right side
+
+    int topTile = tileMap.pixelsToTiles(y - offsetY);
+    int bottomTile = tileMap.pixelsToTiles(y - offsetY + HEIGHT - 1);
+    int xTile = tileMap.pixelsToTiles(checkX);
+
+    for (int yTile = topTile; yTile <= bottomTile; yTile++) {
+        if (tileMap.getTile(xTile, yTile) != null) {
+            return true;
+        }
+    }
+    return false;
     }
 
-    if (inAir) {
 
-        fallSpeed += GRAVITY;
-        if (fallSpeed > MAX_FALL_SPEED) {
-            fallSpeed = MAX_FALL_SPEED;
-        }
 
-        int newY = y + fallSpeed;
 
-        Point tilePos = collidesWithTileDown(newY);
-
-        if (tilePos != null) {
-            // LAND
+    public boolean collidesLeft() {
+            int newX = x - dx;
             int offsetY = tileMap.getOffsetY();
-            int tileTopY = ((int) tilePos.getY()) * 32 + offsetY;
 
-            y = tileTopY - HEIGHT;
+            int checkX = newX; // left side
 
-            inAir = false;
-            fallSpeed = 0;
+            int topTile = tileMap.pixelsToTiles(y - offsetY);
+            int bottomTile = tileMap.pixelsToTiles(y - offsetY + HEIGHT - 1);
+            int xTile = tileMap.pixelsToTiles(checkX);
 
-        } else {
-            y = newY;
-        }
+            for (int yTile = topTile; yTile <= bottomTile; yTile++) {
+                if (tileMap.getTile(xTile, yTile) != null) {
+                    return true;
+                }
+            }
+            return false;
     }
-}
+
+    public void update() {
+
+    Player player = tileMap.getPlayer();
+    if(player.isOffMap()){
+        player.harmfulCollision();
+    }
 
 
+    boolean playerOn = tileMap.getPlayer().landedOnStick();
 
+    if (playerOn && !playerWasOn && !moving) {
+        moving = true;
+        
+    }
+
+    playerWasOn = playerOn;
+
+       if (moving){
+
+            if(position.equals("left")  ){
+                    x=x+dx;
+                    player.moveWithStick(dx); // move player with stick
+
+                    if(collidesRight()){
+                        position="right";
+                        moving=false;
+                    }
+            }
+
+        else  if(position.equals("right") ){
+                    x=x-dx;
+                    player.moveWithStick(-dx); // move player with stick
+
+                    if(collidesLeft()){
+                        position="left";
+                        moving=false;
+                    }
+            }
+       }
+    }
+                
+            
+    
+
+
+public boolean isMoving(){return this.moving;}
+public String getPosition(){return this.position;}
 
     public void reset() {
         x = startX;
         y = startY;
+    if(panel.getLevel()==2){
+        position="left";
+        moving=false;
+    }
     }
 }
