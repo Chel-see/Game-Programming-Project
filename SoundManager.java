@@ -18,7 +18,7 @@ public class SoundManager {				// a Singleton class
 		
 	
 
-		clip = loadClip("sounds/RiverSound.wav");
+		clip = loadClip("sounds/nature-soundstropicaljunglebirds.wav");
 		clips.put("background", clip);	
 		
 		clip = loadClip("sounds/KeyCollected.wav");
