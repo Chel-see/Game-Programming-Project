@@ -46,6 +46,10 @@ public class TileMap {
 
     private Stick stick;
 
+    private Helicopter helicopter;
+    private int cutscenePhase = 0;
+    private int cutsceneTimer = 0;
+
     /**
         Creates a new TileMap with the specified width and
         height (in number of tiles) of the map.
@@ -167,6 +171,23 @@ public class TileMap {
             player.setY(y);
 
         System.out.println("Player coordinates: " + x + "," + y);
+
+        }
+
+
+        if (panel.getLevel() == 3){
+            NUM_TILES = 3;
+
+            player = new Player (panel, this, bgManager);
+            helicopter = new Helicopter(500, 50);  // start off screen (right)
+
+            // position player on ground
+            int playerHeight = player.getHeight();
+            int x = 100;
+            int y = dimension.height - ((TILE_SIZE * NUM_TILES) + playerHeight);
+
+            player.setX(x);
+            player.setY(y);
 
         }
 
@@ -327,6 +348,14 @@ public class TileMap {
             }
         }
 
+        if (panel.getLevel() == 3){
+            helicopter.draw(g2, offsetX);
+            System.out.println("Helicopter X: " + helicopter.getX());
+
+            player.draw(g2, offsetX);
+            return;
+        }
+
         // draw door
         door.draw(g2, offsetX);
        // blade.draw(g2, offsetX);
@@ -435,6 +464,44 @@ public class TileMap {
 
 
     public void update() {
+
+        if (panel.getLevel() == 3){
+            panel.success(true);
+            cutsceneTimer++;
+
+            // Phase 0: helicopter flies in from right
+            if (cutscenePhase == 0) {
+                helicopter.update(0);
+
+                if (helicopter.getX() < 300) {
+                    cutscenePhase = 1;
+                }
+            }
+            // Phase 1: helicopter descends
+            else if (cutscenePhase == 1) {
+                helicopter.update(1);
+
+                if (helicopter.getY() >= 260) {
+                    cutscenePhase = 2;
+                }
+            }
+            // Phase 2: player walks to helicopter
+            else if (cutscenePhase == 2){
+                player.setAnimation("walkRight");
+                player.setX(player.getX() + 5);
+
+                if (player.getX() >= helicopter.getX() - 25) {
+                    player.setAnimation("idle");
+                    cutscenePhase = 3;
+                }
+            }
+            // Phase 3: end
+            else if (cutscenePhase == 3){
+                panel.end();
+            }
+
+            return;
+        }
 
         player.update();
         key.update();

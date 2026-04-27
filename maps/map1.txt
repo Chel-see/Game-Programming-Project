@@ -12,7 +12,7 @@
                
                  NNNN          N
           NNNOPPQ    OPPQN    NNNN
-N        NN                        NOPPQNNN
+N        NN                         NOPQNNN
 NNN   N                                   NNN 
                                                NNNNN
                                                       ABBC
