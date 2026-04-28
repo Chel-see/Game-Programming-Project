@@ -14,13 +14,12 @@ public class Villain {
    private int x;
    private int y;
 
-   //private int width = 50;
-   //private int height = 37;
+ 
    private int width = 50;
    private int height = 32;
 
-   private int dx;        // increment to move along x-axis
-   private int dy;        // increment to move along y-axis
+   private int dx;        
+   private int dy;        
 
 
    private Player player;
@@ -100,7 +99,7 @@ public class Villain {
       if (collidesWithPlayer()) {
         isAttacking = true;
 
-        if(!growled){ // so it only starts once 
+        if(!growled){ 
             soundManager.playSound("growl", false);
             growled=true;
         }
@@ -111,7 +110,7 @@ public class Villain {
         else{
             setAnimation("attack_right");
         }
-        // if(player.getInvincibility()) return;
+        
     
         player.harmfulCollision();
 
@@ -184,7 +183,7 @@ public class Villain {
     }
 
     public Rectangle2D.Double getBoundingRectangle() {
-        //return new Rectangle2D.Double(this.x, this.y,this.width-15, this.height);
+       
         return new Rectangle2D.Double(this.x, this.y,this.width-15, this.height);
     }
 
@@ -196,7 +195,7 @@ public class Villain {
     }
 
     public void reset() {
-        // reset to original position
+      
         x = startX;
         y = startY;
         growled=false;

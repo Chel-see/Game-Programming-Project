@@ -5,12 +5,6 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import javax.swing.JPanel;
 
-/**
-    The TileMap class contains the data for a tile-based
-    map, including Sprites. Each tile is a reference to an
-    Image. Images are used multiple times in the tile map.
-    map.
-*/
 
 public class TileMap {
 
@@ -50,10 +44,8 @@ public class TileMap {
     private int cutscenePhase = 0;
     private int cutsceneTimer = 0;
 
-    /**
-        Creates a new TileMap with the specified width and
-        height (in number of tiles) of the map.
-    */
+   
+
     public TileMap(GamePanel panel, int width, int height) {
         levelCompleted = false;
 
@@ -70,8 +62,7 @@ public class TileMap {
         mapWidth = width;
         mapHeight = height;
 
-            // get the y offset to draw all sprites and tiles
-
+         
             offsetY = screenHeight - tilesToPixels(mapHeight);
         System.out.println("offsetY: " + offsetY);
 
@@ -134,19 +125,19 @@ public class TileMap {
             player = new Player (panel, this, bgManager);
             key = new Key (panel, 550, 270 ,  player);
             
-            door = new Door (panel, 4100, 14, player, key);
+            door = new Door (panel, 4170, 14, player, key);
 
             villains = new Villain [2];
-             villains[0] = new Villain(2304, 355, player, 2, 0, 180, 2);
-             villains[1] = new Villain(3500, 322, player, 3, 120, 100, 6);
+             villains[0] = new Villain(2704, 355, player, 2, 0, 180, 2);
+             villains[1] = new Villain(3870, 322, player, 3, 120, 100, 6);
            
 
             coins = new Coin[5];
             coins[0] = new Coin(84, 188, player);
             coins[1] = new Coin(824, 285, player);
-            coins[2] = new Coin(1685, 125, player);
-            coins[3] = new Coin(2090, 155, player);
-            coins[4] = new Coin(2730, 182, player);
+            coins[2] = new Coin(1860, 125, player);
+            coins[3] = new Coin(2104, 149, player);
+            coins[4] = new Coin(2576, 213, player);
 
             blades = new Blade[3];
             blades[0] = new Blade(620, 190, 100, player,this);
@@ -190,7 +181,7 @@ public class TileMap {
 
         }
 
-        //blade = new Blade(250, 294, player);
+       
 
         sprites = new LinkedList();
 
@@ -200,11 +191,7 @@ public class TileMap {
     }
 
 
-    // public void createLevelTwoEntities() {
-    //  Player player = new Player (panel, this, bgManager);
-    //   Key key = new Key (panel, 100, 200, player);    
-    // }
-
+   
 
     /**
         Gets the width of this TileMap (number of pixels across).
@@ -310,28 +297,18 @@ public class TileMap {
     {
         int mapWidthPixels = tilesToPixels(mapWidth);
 
-        // get the scrolling position of the map
-        // based on player's position
+    
 
         int offsetX = screenWidth / 2 -
             Math.round(player.getX()) - TILE_SIZE;
         offsetX = Math.min(offsetX, 0);
         offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
 
-/*
-        // draw black background, if needed
-        if (background == null ||
-            screenHeight > background.getHeight(null))
-        {
-            g.setColor(Color.black);
-            g.fillRect(0, 0, screenWidth, screenHeight);
-        }
-*/
-    // draw the background first
+
 
     bgManager.draw (g2);
 
-        // draw the visible tiles
+
 
         int firstTileX = pixelsToTiles(-offsetX);
         int lastTileX = firstTileX + pixelsToTiles(screenWidth) + 1;
@@ -355,24 +332,20 @@ public class TileMap {
             return;
         }
 
-        // draw door
+      
         door.draw(g2, offsetX);
-       // blade.draw(g2, offsetX);
+      
 
-        // draw stick
+      
         if (stick!=null){
             stick.draw(g2, offsetX);
         }
 
-        // draw player
-
-       // g2.drawImage(player.getImage(),Math.round(player.getX()) + offsetX,Math.round(player.getY()) + offsetY, player.getWidth(), player.getHeight(), null);
-
+        
        player.draw(g2, offsetX);
-        // draw key
+      
        key.draw(g2, offsetX);
 
-        // draw villain
         for(int i=0; i< villains.length; i++){
         villains[i].draw(g2,offsetX);
         }
@@ -393,27 +366,6 @@ public class TileMap {
         }
 
        
-     
-
-        
-
-/*
-        // draw sprites
-        Iterator i = map.getSprites();
-        while (i.hasNext()) {
-            Sprite sprite = (Sprite)i.next();
-            int x = Math.round(sprite.getX()) + offsetX;
-            int y = Math.round(sprite.getY()) + offsetY;
-            g.drawImage(sprite.getImage(), x, y, null);
-
-            // wake up the creature when it's on screen
-            if (sprite instanceof Creature &&
-                x >= 0 && x < screenWidth)
-            {
-                ((Creature)sprite).wakeUp();
-            }
-        }
-*/
 
     }
 
@@ -603,7 +555,7 @@ public class TileMap {
     
         loseLife();
     
-            // If player still has lives → respawn
+        
     if (!panel.isPlayerDead()) {
         
 
@@ -636,11 +588,10 @@ public class TileMap {
         });
 
     } else {
-        // FINAL LIFE LOST → do NOTHING here
-        // GamePanel will handle game over rendering
+     
         panel.gameOver(true);
 
-        resetting = false; // allow rendering to continue normally
+        resetting = false; 
     }
     }
 
