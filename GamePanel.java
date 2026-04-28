@@ -176,7 +176,7 @@ public class GamePanel extends JPanel
                 if (level != 3){
                     showBanner("Level " + level);
                 } else {
-                    showBanner("Bob is saved!");
+                    showBanner("Player is saved!");
                 }
             }
 
@@ -653,6 +653,7 @@ public class GamePanel extends JPanel
         finalTime = gameTimer.getTime();
         isRunning = false;
         gameOverFlag = true;
+        endGame();
         gameRender();
     }
 
@@ -812,5 +813,9 @@ public class GamePanel extends JPanel
             isRunning = false;
             endFlag = true;
             gameRender();
+    }
+
+    public void resetCoinCount() {
+        this.coinCount = 0;
     }
 }

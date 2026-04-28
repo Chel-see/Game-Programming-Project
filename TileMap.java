@@ -135,9 +135,9 @@ public class TileMap {
             coins = new Coin[5];
             coins[0] = new Coin(84, 188, player);
             coins[1] = new Coin(824, 285, player);
-            coins[2] = new Coin(1860, 125, player);
-            coins[3] = new Coin(2104, 149, player);
-            coins[4] = new Coin(2576, 213, player);
+            coins[2] = new Coin(1877, 125, player);
+            coins[3] = new Coin(2445, 149, player);
+            coins[4] = new Coin(3123, 213, player);
 
             blades = new Blade[3];
             blades[0] = new Blade(620, 190, 100, player,this);
@@ -147,6 +147,7 @@ public class TileMap {
             axe=new Axe(3470,96,player);
 
             panel.resetHearts();
+            panel.resetCoinCount();
 
 
         int playerHeight = player.getHeight();

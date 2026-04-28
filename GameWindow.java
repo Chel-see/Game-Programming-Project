@@ -65,7 +65,7 @@ public class GameWindow extends JFrame
 
         // create buttons
 
-            startB = new JButton ("Start Game");
+            startB = new JButton ("Start");
             pauseB = new JButton ("Pause Game");
             endB = new JButton ("End Game");
         startNewB = new JButton ("Switch to Level 2");
@@ -194,7 +194,8 @@ public class GameWindow extends JFrame
         }
         
         if (command.equals(endB.getText())) {
-            gamePanel.endGame();
+            //gamePanel.endGame();
+            gamePanel.gameOver(true);
         }
 
         if (command.equals(startNewB.getText()))
