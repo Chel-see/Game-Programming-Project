@@ -60,8 +60,8 @@ public class Player {
    public Player (GamePanel panel, TileMap t, BackgroundManager b) {
       this.panel = panel;
 
-      tileMap = t;            // tile map on which the player's sprite is displayed
-      bgManager = b;            // instance of BackgroundManager
+      tileMap = t;            
+      bgManager = b;            
 
       goingUp = goingDown = false;
       inAir = false;
@@ -74,7 +74,7 @@ public class Player {
       walkLeft= new GridAnimation("Warrior/WalkLeft.png", 1, 8, true);
       death = new GridAnimation("Warrior/Dead.png", 1, 4, false);
 
-     // jump = new GridAnimation("Warrior/Jump.png", 1, 5, true);
+  
       
       currentAnim=idle;
       currentAnim.start();
@@ -100,9 +100,7 @@ public class Player {
                 newAnim = walkLeft;
             
         }
-      //   else if(name.equals("jump")){
-      //       newAnim = jump;
-      //   }
+    
         else if(name.equals("death")){
             newAnim = death;
         }
@@ -114,15 +112,15 @@ public class Player {
 
     }
 
-   public Point collidesWithTile(int newX, int newY) {  //cater for left and right collisions mainly 
+   public Point collidesWithTile(int newX, int newY) {  
 
      
       
       int offsetY = tileMap.getOffsetY();
       
       int xTile = tileMap.pixelsToTiles(newX);
-      // checks the point of both the x and y axis for collisions . 
-      int yTileFrom = tileMap.pixelsToTiles(newY - offsetY+2); // added 2 so it wont detect the floor and be stuck in place
+     
+      int yTileFrom = tileMap.pixelsToTiles(newY - offsetY+2); 
       int yTileTo = tileMap.pixelsToTiles(newY - offsetY + height-2);
 
       for (int yTile = yTileFrom; yTile <= yTileTo; yTile++) {
@@ -147,18 +145,17 @@ public class Player {
          int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
          int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);
      
-         // First, check if landing on a crate - if yes, return null (no tile collision)
+       
          Rectangle2D.Double futureBounds = new Rectangle2D.Double(newX, newY, playerWidth, playerHeight);
 
-         // ADD NULL CHECK HERE
+         
          if (stick != null && futureBounds.intersects(stick.getBounds())) {
             // Check if landing ON TOP of stick
             if (y + getHeight() <= stick.getY() + 5) {
-               return null; // Return null to prevent tile collision handling
+               return null; 
             }
          }
      
-         // Only check tile collisions if not landing on crate
          for (int yTile = yTileFrom; yTile <= yTileTo; yTile++) {
              if (tileMap.getTile(xTile, yTile) != null) {
                  Point tilePos = new Point(xTile, yTile);
@@ -231,7 +228,7 @@ public class Player {
          if (stick.getBounds().intersects(new Rectangle2D.Double(newX, y, width, height))) {
             boolean moved = stick.move(-DX);
             if (!moved) {
-                return; // can't push → stop player
+                return;
             }
         }
          
@@ -241,8 +238,7 @@ public class Player {
          if (tilePos == null && tileMap.getDoor().isSolid()) {
             if (tileMap.getDoor().collidesWithPlayer()) {
 
-               // block movement on right side of door
-              // x = tileMap.getDoor().getX() + tileMap.getDoor().getWidth();
+            
                 newX=newX-0;
                return;
             }
@@ -261,11 +257,11 @@ public class Player {
             return;
          }
 
-         // ADD THIS STICK PUSHING CODE FOR RIGHT MOVEMENT
+         
          if (stick != null && stick.getBounds().intersects(new Rectangle2D.Double(newX, y, width, height))) {
-            boolean moved = stick.move(DX);  // Positive DX for right push
+            boolean moved = stick.move(DX); 
             if (!moved) {
-               return; // can't push → stop player
+               return; 
             }
          }
 
@@ -273,15 +269,13 @@ public class Player {
          if (tilePos == null && tileMap.getDoor().isSolid()) {
             if (tileMap.getDoor().collidesWithPlayer()) {
       
-               // block movement on left side of door
-               //x = tileMap.getDoor().getX() - playerWidth;
-               // x = tileMap.getDoor().getX() - playerWidth;
+               
               newX=newX+0;
                return;
             }
          }           
       }
-      else                // jump
+      else              
       if (direction == 3 && !jumping) {     
           jump();
       return;
@@ -298,13 +292,13 @@ public class Player {
       if (tilePos != null) {  
          if (direction == 1) {
             System.out.println (": Collision going left");
-            x = ((int) tilePos.getX() + 1) * TILE_SIZE;       // keep flush with right side of tile
+            x = ((int) tilePos.getX() + 1) * TILE_SIZE;       
          }
          else
          if (direction == 2) {
             System.out.println (": Collision going right");
             
-            x = ( ((int) tilePos.getX() ) * TILE_SIZE- width); // keep flush with left side of tile eg 15x32=448, 448-32=416 but the player can move an extra amount 
+            x = ( ((int) tilePos.getX() ) * TILE_SIZE- width); 
          }
      }
       else {
@@ -341,12 +335,12 @@ public class Player {
              if (tileMap.getTile(leftTile, yTile) == null &&
                  tileMap.getTile(rightTile, yTile) == null) {
                  
-                 // Also check if standing on stick
+               
                  Rectangle2D.Double feetBounds = new Rectangle2D.Double(x, y + height, width, 2);
                  if (stick != null && feetBounds.intersects(stick.getBounds())) {
-                     return false; // Standing on stick
+                     return false; 
                  }
-                 return true; // In air
+                 return true; 
              }
          }
          return false;
@@ -403,7 +397,7 @@ private void checkStandingOnWater() {
 
 
    public void jump () {  
-      //setAnimation("jump");
+     
 
       if (!panel.isVisible ()) return;
 
@@ -416,7 +410,7 @@ private void checkStandingOnWater() {
       goingDown = false;
 
       startY = y;
-      //initialVelocity = 70;
+   
       initialVelocity = 55;
    }
 
@@ -501,7 +495,7 @@ private void checkStandingOnWater() {
                 inAir = false;
             }
             else {
-                // Check for crate landing (since collidesWithTileDown returned null for crates)
+               
                 landedOnStick = false;
                 
                Rectangle2D.Double futureBounds = new Rectangle2D.Double(x, newY, getWidth(), getHeight());
@@ -566,9 +560,7 @@ private void checkStandingOnWater() {
    }
 
 
-   // public Image getImage() {
-   //    return playerImage;
-   // }
+   
 
    public void draw(Graphics2D g2, int offsetX) {
       if (playerIsDead && !currentAnim.isStillActive()) {
@@ -582,21 +574,12 @@ private void checkStandingOnWater() {
 
          if (panel.isInvincible()){
             //invincible=true;
-            BufferedImage faded = applyFade(frame, 100); // increase alpha value for less transparency
+            BufferedImage faded = applyFade(frame, 100); 
             g2.drawImage(faded, x + offsetX, y, width, height, null);
          }
          else {
-            //invincible=false;
-                  Rectangle2D.Double p = getBounds();
-
-      g2.setColor(Color.BLUE);
-
-      g2.draw(new Rectangle2D.Double(
-         p.x + offsetX,
-         p.y + tileMap.getOffsetY(),
-         p.width,
-         p.height
-      ));
+           
+      
             g2.drawImage(frame, x + offsetX, y, width, height, null);
          }
    }
@@ -625,7 +608,7 @@ private void checkStandingOnWater() {
    public void harmfulCollision() {
       if(panel.isInvincible()) return;
 
-      if (playerIsDead) return;   // so it does repeatedly trigger death if already dead
+      if (playerIsDead) return;   
 
       playerIsDead = true;
       deathAnimFinished = false;
@@ -643,7 +626,7 @@ private void checkStandingOnWater() {
       deathAnimFinished = false;
       splashPlayed = false;
 
-    setAnimation("idle"); // reset animation
+    setAnimation("idle"); 
    }
    
 
@@ -692,22 +675,22 @@ private void checkStandingOnWater() {
     Point tilePos;
 
     if (dx > 0) {
-        tilePos = collidesWithTile(newX + width, y); // right side
+        tilePos = collidesWithTile(newX + width, y); 
         if (tilePos != null) {
-            // snap to left side of tile
+          
             x = ((int) tilePos.getX()) * TILE_SIZE - width;
             return;
         }
     } else {
-        tilePos = collidesWithTile(newX, y); // left side
+        tilePos = collidesWithTile(newX, y); 
         if (tilePos != null) {
-            // snap to right side of tile
+           
             x = ((int) tilePos.getX() + 1) * TILE_SIZE;
             return;
         }
     }
 
-    // no collision → move freely
+    
     x = newX;
    }
 

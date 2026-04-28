@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.Color;
 
 import java.lang.Math;
 
@@ -14,7 +15,7 @@ public class Axe {
 
    private  int pivotX ;
    private  int pivotY ;
-  // private static int radius = 300;
+ 
 
    private int degreeRange;
    private int startDegree;
@@ -72,7 +73,7 @@ public class Axe {
 
     
    }
-
+ 
 
 
     public void draw (Graphics2D g2, int offsetX) {
@@ -81,17 +82,14 @@ public class Axe {
 
     int pivotDrawX = pivotX + offsetX;
     
-     drawX = pivotX + offsetX - WIDTH / 2; // center image horizontally
+     drawX = pivotX + offsetX - WIDTH / 2; 
      drawY = pivotY;
 
-    // rotate around top-center of axe
+    
     g2.rotate(radians, pivotDrawX, pivotY);
 
     g2.drawImage(img, drawX, drawY, WIDTH, HEIGHT, null);
-
-  
-
-    // reset rotation
+   
     g2.rotate(-radians, pivotDrawX, pivotY);
     }
 

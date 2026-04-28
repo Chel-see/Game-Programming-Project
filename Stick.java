@@ -9,14 +9,12 @@ public class Stick {
     private static final int WIDTH = 170;   // adjust as needed
     
     private static final int HEIGHT = 31;
-    private boolean inAir = false;
+   
     private boolean moving=false;
 
     private boolean playerWasOn = false;
 
-    private int fallSpeed = 0;
-    private static final int GRAVITY = 2;
-    private static final int MAX_FALL_SPEED = 12;
+   
 
     private int x, y,dx;
     private int startX, startY;
@@ -31,7 +29,7 @@ public class Stick {
         this.x = x;
         this.y = y;
 
-        this.dx = 3;
+        this.dx = 5;
 
         this.startX = x;
         this.startY = y;
@@ -76,11 +74,11 @@ public class Stick {
         for (int yTile = topTile; yTile <= bottomTile; yTile++) {
             if (tileMap.getTile(xTile, yTile) != null) {
                 if (dx > 0) {
-                    newX = (xTile * 32) - WIDTH; // align to left of tile
+                    newX = (xTile * 32) - WIDTH; 
                 } else {
-                    newX = ((xTile + 1) * 32); // align to right of tile
+                    newX = ((xTile + 1) * 32); 
                 }
-                return false; // blocked
+                return false;
             }
         }
 
@@ -96,7 +94,7 @@ public class Stick {
     int newX = x + dx;
     int offsetY = tileMap.getOffsetY();
 
-    int checkX = newX + WIDTH; // right side
+    int checkX = newX + WIDTH; 
 
     int topTile = tileMap.pixelsToTiles(y - offsetY);
     int bottomTile = tileMap.pixelsToTiles(y - offsetY + HEIGHT - 1);
@@ -117,7 +115,7 @@ public class Stick {
             int newX = x - dx;
             int offsetY = tileMap.getOffsetY();
 
-            int checkX = newX; // left side
+            int checkX = newX;
 
             int topTile = tileMap.pixelsToTiles(y - offsetY);
             int bottomTile = tileMap.pixelsToTiles(y - offsetY + HEIGHT - 1);
@@ -152,7 +150,7 @@ public class Stick {
 
             if(position.equals("left")  ){
                     x=x+dx;
-                    player.moveWithStick(dx); // move player with stick
+                    player.moveWithStick(dx);
 
                     if(collidesRight()){
                         position="right";
@@ -162,7 +160,7 @@ public class Stick {
 
         else  if(position.equals("right") ){
                     x=x-dx;
-                    player.moveWithStick(-dx); // move player with stick
+                    player.moveWithStick(-dx); 
 
                     if(collidesLeft()){
                         position="left";
