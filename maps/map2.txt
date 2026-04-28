@@ -9,16 +9,16 @@
 #   1       Bad Guy 1 (grub)
 #   2       Bad Guy 2 (fly)
 
-                      
-                                                 
-                                                                                                                     OPQO
-                                                            
-                 ABBBBBBC                           NN    N                                                       O
-                 D      TBBC            ABBC   N    NN   N N    ABBC                                                     
-ABBC           ABS                      DEEF                    DEEF                       ABBBBBBBBC
-DEEF           DF                       DEEF                    DEETBC                ABC  DEEEEEEEETC        NN  
-DEEF         ABSF                    AOQSEEF                    DEEEEF            AC  DETJKSEEEEEEEEETC
-DEETBBBBBBBBBSEETBBBBOPPPPPQ         DJMREEF                    DEEEEF          ABSTJMSEEEEEEEEEEEEEEETC
-DREEEEREEREREEREEEEEE        RRBBBBBBSEEEEEF                    DEEEETBC        DEEEREEEEREEEEEEEEEEEEETBBBBBBBBBBC
-DEEREEEREEREREEERREEERJKLKLKLRREEEREEEEEEEEF                    DEEEERRTBBBBBBBBSEEEEEEREEEEEEEEEEEEEEEEEEEEEEEEEETJKLKLM
-GHHHHHHHHHHHHHHHHHHHHHHHHHHHHRREEEEEEEEEEEEF                    DEEEERREEHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+                                                                                                
+      NOQN                                                                                              NNNNNNNN
+                                                                                                                                 OPQO
+                        ABBBC                                                                     
+                 ABBBBBBS                                 NN       N                                                         OQ
+                 D                      ABBC      N       NN      N N       ABBC                                                     
+ABBC           ABS                      DEEF                                DEEF                       ABBBBBBBBC
+DEEF           DF                       DEEF                                DEETBC                ABC  DEEEEEEEETC        NN  
+DEEF         ABSF                    AOQSEEF                                DEEEEF            AC  DETJKSEEEEEEEEETC
+DEETBBBBBBBBBSEETBBBBOPPPPQ          DJMREEF                                DEEEEF          ABSTJMSEEEEEEEEEEEEEEETC
+DREEEEREEREREEREEEEEE        RRBBBBBBSEEEEEF                                DEEEETBC        DEEEREEEEREEEEEEEEEEEEETBBBBBBBBBBC
+DEEREEEREEREREEERREEERJKLKLKLRREEEREEEEEEEEF                                DEEEERRTBBBBBBBBSEEEEEEREEEEEEEEEEEEEEEEEEEEEEEEEETJKLKLM
+GHHHHHHHHHHHHHHHHHHHHHHHHHHHHRREEEEEEEEEEEEF                                DEEEERRHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH

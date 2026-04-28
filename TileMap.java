@@ -134,7 +134,7 @@ public class TileMap {
             player = new Player (panel, this, bgManager);
             key = new Key (panel, 550, 270 ,  player);
             
-            door = new Door (panel, 3800, 14, player, key);
+            door = new Door (panel, 4100, 14, player, key);
 
             villains = new Villain [2];
              villains[0] = new Villain(2304, 355, player, 2, 0, 180, 2);
@@ -145,15 +145,15 @@ public class TileMap {
             coins[0] = new Coin(84, 188, player);
             coins[1] = new Coin(824, 285, player);
             coins[2] = new Coin(1685, 125, player);
-            coins[3] = new Coin(2080, 155, player);
+            coins[3] = new Coin(2090, 155, player);
             coins[4] = new Coin(2730, 182, player);
 
-            blades = new Blade[2];
-            blades[0] = new Blade(600, 225, 100, player,this);
-            blades[1] = new Blade(700, 225, 40, player,this);
-           // blades[2] = new Blade(30, 70 , 20, player,this);
+            blades = new Blade[3];
+            blades[0] = new Blade(620, 190, 100, player,this);
+            blades[1] = new Blade(730, 190, 40, player,this);
+            blades[2] = new Blade(230,  80, 40, player,this);
             
-           // axe=new Axe(1060,30,player);
+            axe=new Axe(3470,96,player);
 
             panel.resetHearts();
 

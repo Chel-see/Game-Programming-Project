@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.Image;
+import java.awt.Color;;
 
 public class Player {            
 
@@ -586,6 +587,16 @@ private void checkStandingOnWater() {
          }
          else {
             //invincible=false;
+                  Rectangle2D.Double p = getBounds();
+
+      g2.setColor(Color.BLUE);
+
+      g2.draw(new Rectangle2D.Double(
+         p.x + offsetX,
+         p.y + tileMap.getOffsetY(),
+         p.width,
+         p.height
+      ));
             g2.drawImage(frame, x + offsetX, y, width, height, null);
          }
    }
