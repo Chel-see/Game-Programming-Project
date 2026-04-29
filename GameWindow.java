@@ -35,6 +35,8 @@ public class GameWindow extends JFrame
     private JPanel mainPanel;
     private GamePanel gamePanel;
 
+    private ImagePanel imagePanel;
+
     @SuppressWarnings({"unchecked"})
     public GameWindow() {
  
@@ -97,7 +99,7 @@ public class GameWindow extends JFrame
 
         // create infoPanel
 
-        JPanel infoPanel = new JPanel();
+        /* JPanel infoPanel = new JPanel();
         gridLayout = new GridLayout(3, 2);
         infoPanel.setLayout(gridLayout);
         infoPanel.setBackground(Color.ORANGE);
@@ -111,8 +113,10 @@ public class GameWindow extends JFrame
         infoPanel.add (keyTF);        
 
         infoPanel.add (mouseL);
-        infoPanel.add (mouseTF);
+        infoPanel.add (mouseTF); */
 
+        imagePanel = new ImagePanel("UI/name.png");
+        mainPanel.add(imagePanel);
         
         // create buttonPanel
 
@@ -183,6 +187,7 @@ public class GameWindow extends JFrame
 
         if (command.equals(startB.getText())) {
             gamePanel.startGame();
+            imagePanel.setShowImage(true);
         }
 
         if (command.equals(pauseB.getText())) {
