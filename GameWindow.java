@@ -38,7 +38,7 @@ public class GameWindow extends JFrame
     @SuppressWarnings({"unchecked"})
     public GameWindow() {
  
-        setTitle ("Tiled Bat and Ball Game: Ordinary Windowed Mode");
+        setTitle ("Run Forest Run");
         setSize (700, 675);
 
         // create user interface objects
@@ -117,7 +117,8 @@ public class GameWindow extends JFrame
         // create buttonPanel
 
         JPanel buttonPanel = new JPanel();
-        gridLayout = new GridLayout(2, 3);
+        //gridLayout = new GridLayout(2, 3);
+        gridLayout = new GridLayout(1, 3);
         buttonPanel.setLayout(gridLayout);
 
         // add buttons to buttonPanel
@@ -125,13 +126,13 @@ public class GameWindow extends JFrame
         buttonPanel.add (startB);
         buttonPanel.add (pauseB);
         buttonPanel.add (endB);
-        buttonPanel.add (startNewB);
-        buttonPanel.add (focusB);
-        buttonPanel.add (exitB);
+        //buttonPanel.add (startNewB);
+        //buttonPanel.add (focusB);
+        //buttonPanel.add (exitB);
 
         // add sub-panels with GUI objects to mainPanel and set its colour
 
-        mainPanel.add(infoPanel);
+        //mainPanel.add(infoPanel);
         mainPanel.add(gamePanel);
         mainPanel.add(buttonPanel);
         mainPanel.setBackground(Color.GRAY);
