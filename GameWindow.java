@@ -26,9 +26,6 @@ public class GameWindow extends JFrame
     private JButton startB;
     private JButton pauseB;
     private JButton endB;
-    private JButton startNewB;
-    private JButton focusB;
-    private JButton exitB;
 
     private Container c;
 
@@ -70,19 +67,12 @@ public class GameWindow extends JFrame
             startB = new JButton ("Start");
             pauseB = new JButton ("Pause Game");
             endB = new JButton ("End Game");
-        startNewB = new JButton ("Switch to Level 2");
-            focusB = new JButton ("Show Animation");
-        exitB = new JButton ("Exit");
-
 
         // add listener to each button (same as the current object)
 
         startB.addActionListener(this);
         pauseB.addActionListener(this);
         endB.addActionListener(this);
-        startNewB.addActionListener(this);
-        focusB.addActionListener(this);
-        exitB.addActionListener(this);
         
         // create mainPanel
 
@@ -97,23 +87,7 @@ public class GameWindow extends JFrame
         gamePanel = new GamePanel();
             gamePanel.setPreferredSize(new Dimension(600, 450));
 
-        // create infoPanel
-
-        /* JPanel infoPanel = new JPanel();
-        gridLayout = new GridLayout(3, 2);
-        infoPanel.setLayout(gridLayout);
-        infoPanel.setBackground(Color.ORANGE);
-
-        // add user interface objects to infoPanel
-    
-        infoPanel.add (statusBarL);
-        infoPanel.add (statusBarTF);
-
-        infoPanel.add (keyL);
-        infoPanel.add (keyTF);        
-
-        infoPanel.add (mouseL);
-        infoPanel.add (mouseTF); */
+        // create imagePanel
 
         imagePanel = new ImagePanel("UI/name.png");
         mainPanel.add(imagePanel);
@@ -130,9 +104,6 @@ public class GameWindow extends JFrame
         buttonPanel.add (startB);
         buttonPanel.add (pauseB);
         buttonPanel.add (endB);
-        //buttonPanel.add (startNewB);
-        //buttonPanel.add (focusB);
-        //buttonPanel.add (exitB);
 
         // add sub-panels with GUI objects to mainPanel and set its colour
 
@@ -168,7 +139,6 @@ public class GameWindow extends JFrame
 
         statusBarTF.setText("Application started.");
 
-        //gamePanel.gameRender();
         new javax.swing.Timer(100, e -> {
             gamePanel.gameRender();
             ((javax.swing.Timer)e.getSource()).stop();
@@ -203,16 +173,6 @@ public class GameWindow extends JFrame
             //gamePanel.endGame();
             gamePanel.gameOver(true);
         }
-
-        if (command.equals(startNewB.getText()))
-            //gamePanel.startNewGame();
-        gamePanel.endLevel();
-
-        if (command.equals(focusB.getText()))
-            gamePanel.showAnimation();
-
-        if (command.equals(exitB.getText()))
-            System.exit(0);
 
         mainPanel.requestFocus();
     }

@@ -38,24 +38,24 @@ public class Key {
    private int startY;
 
    public Key (JPanel p, int xPos, int yPos, Player player) {
-      panel = p;
+        panel = p;
 
-      random = new Random();
+        random = new Random();
 
-      scaleImage = 2.0;
+        scaleImage = 2.0;
 
-      x = xPos;
-      y = yPos;
+        x = xPos;
+        y = yPos;
 
-      startX = xPos;
-      startY = yPos;
+        startX = xPos;
+        startY = yPos;
 
-      dx = 20;
-      dy = 20;
+        dx = 20;
+        dy = 20;
 
-      this.player = player;
+        this.player = player;
 
-      animation = new Animation(true); // true = looping
+        animation = new Animation(true); // true = looping
 
         Image stripImage = ImageManager.loadImage("Key2.png");
 
@@ -86,12 +86,12 @@ public class Key {
         height = (int) (imageHeight * scaleImage);
 
 
-      frameNumber = 0;
+        frameNumber = 0;
 
-      collected = false;
-      animation.start();
-      soundManager = SoundManager.getInstance();
-      soundManager.setVolume("key", 0.85f);
+        collected = false;
+        animation.start();
+        soundManager = SoundManager.getInstance();
+        soundManager.setVolume("key", 0.85f);
    }
 
 
@@ -107,55 +107,25 @@ public class Key {
     }
 
 
-   public void move() {
+    public void move() {
     
-    if (!panel.isVisible()) return;
-    if (!collected) return;
+        if (!panel.isVisible()) return;
+        if (!collected) return;
 
-    int targetX = player.getX() + 8;
-    int targetY = player.getY() - height - 3;
+        int targetX = player.getX() + 8;
+        int targetY = player.getY() - height - 3;
 
-    x += (targetX - x) * 0.35;
-    y += (targetY - y) * 0.35;
+        x += (targetX - x) * 0.35;
+        y += (targetY - y) * 0.35;
 
-    y += Math.sin(System.currentTimeMillis() * 0.005) * 2;
-
-/*
-     if (Math.abs (x - bat.getX()) < 50 && !soundPlayed) {
-    soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
-
-     if (Math.abs (x - bat.getX()) > 80 && soundPlayed) {
-    soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
-
-     if (Math.abs (y - bat.getY()) < 50 && !soundPlayed) {
-    soundManager.playClip ("ghostSound", true);
-        soundPlayed = true;
-     }
-
-     if (Math.abs (y - bat.getY()) > 80 && soundPlayed) {
-    soundManager.stopClip ("ghostSound");
-        soundPlayed = false;
-     }
-*/
-   }
+        y += Math.sin(System.currentTimeMillis() * 0.005) * 2;
+    }
 
 
-   public Rectangle2D.Double getBoundingRectangle() {
-      return new Rectangle2D.Double (x, y, width, height);
-   }
+    public Rectangle2D.Double getBoundingRectangle() {
+        return new Rectangle2D.Double (x, y, width, height);
+    }
 
- /*  
-   public boolean collidesWithPlayer() {
-      Rectangle2D.Double myRect = getBoundingRectangle();
-      Rectangle2D.Double batRect = player.getBoundingRectangle();
-      
-      return myRect.intersects(batRect); 
-   }
-*/
     public boolean isCollected() {
         return collected;
     }
@@ -166,7 +136,6 @@ public class Key {
             soundManager.playSound("key", false);
             keyColSound = true;
         }
-        // Trigger sound or animation here
     }
 
     public void reset() {
@@ -176,5 +145,4 @@ public class Key {
         y = startY;
        
     }
-
 }

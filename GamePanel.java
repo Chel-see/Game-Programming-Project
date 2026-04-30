@@ -160,7 +160,6 @@ public class GamePanel extends JPanel
 
             if (transitionTimer == (FADE_IN_TIME + HOLD_TIME)) {
                 level++;
-                //levelChange = true;
                 tileManager = new TileMapManager (this);
 
                 try {
@@ -187,23 +186,6 @@ public class GamePanel extends JPanel
             return; // skip the rest of the update while in transition
         }
 
-
-/*           if (levelChange) {
-                levelChange = false;
-                tileManager = new TileMapManager (this);
-
-            try {
-                String filename = "maps/map" + level + ".txt";
-                tileMap = tileManager.loadMap(filename) ;
-         }
-            catch (Exception e) {        // no more maps: terminate game
-                gameOver = true;
-                System.out.println(e);
-              
-                return;
-            }
-        } */
-
         if (invincible){
             invincibleTimer--;
             if (invincibleTimer <= 0){
@@ -228,8 +210,6 @@ public class GamePanel extends JPanel
     }
 
     public void endLevel() {
-        //level = level + 1;
-        //levelChange = true;
         inTransition = true;
         transitionTimer = TOTAL_TRANSITION_DURATION;
     }
@@ -506,36 +486,7 @@ public class GamePanel extends JPanel
     }
 
 
-    public void startNewGame() {                // initialise and start a new game thread 
-        // if (gameThread != null || !isRunning) {
-        //     //soundManager.playSound ("background", true);
-
-        //     tileManager = new TileMapManager (this);
-
-        //     try {
-        //         tileMap = tileManager.loadMap("maps/map2.txt");
-        //         int w, h;
-        //         w = tileMap.getWidth();
-        //         h = tileMap.getHeight();
-        //         System.out.println ("Width of tilemap " + w);
-        //         System.out.println ("Height of tilemap " + h);
-        //     }
-        //     catch (Exception e) {
-        //         System.out.println(e);
-        //         System.exit(0);
-        //     }
-
-        //     createGameEntities();
-
-        //     if (gameTimer == null) {
-        //         gameTimer = new GameTimer();
-        //     }
-        //     gameTimer.start();
-
-        //     gameThread = new Thread(this);
-        //     gameThread.start();            
-
-        // }
+    public void startNewGame() {                // initialise and start a new game thread (used for testing purposes - can be called from a button in the GUI)
 
             if (gameThread != null) {   // remove this after testing phase
                 if (level == 1){
@@ -804,9 +755,6 @@ public class GamePanel extends JPanel
         this.successfulCompletion = success;
         gameTimer.pause();
         finalTime = gameTimer.getTime();
-        //isRunning = false;
-        //gameOverFlag = true;
-        //gameRender();
     }
 
     public void end(){
